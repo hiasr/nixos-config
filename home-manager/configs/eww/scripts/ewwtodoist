@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/home/rubenh/.local/bin/todoist q "$1" &
+eww close todoist
