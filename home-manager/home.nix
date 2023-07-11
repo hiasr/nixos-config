@@ -4,6 +4,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   # You can import other home-manager modules here
   imports = [
+    ./sway.nix
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
 
@@ -41,9 +42,9 @@
     };
   };
 
-  home = rec {
+  home =  {
     username = "rubenh";
-    homeDirectory = "/home/${username}";
+    homeDirectory = "/home/${config.home.username}";
     sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
@@ -60,6 +61,10 @@
     tmux
     vscode
     waybar
+    obsidian
+    discord
+    spotify
+    docker
   ];
 
 programs = {
@@ -71,7 +76,6 @@ programs = {
 
     bat = {
         enable = true;
-        highlight = true;
         config = {
             theme = "base16-256";
         };
@@ -83,12 +87,11 @@ programs = {
 
     eww = {
         enable = true;
-        configDir = "./configs/eww";
+        configDir = ./configs/eww;
     };
 
     exa = {
         enable = true;
-        enableAliases = true;
     };
 
     fish = {
@@ -107,8 +110,7 @@ programs = {
 
     firefox = {
         enable = true;
-
-    }
+    };
 
     gh = {
         enable = true;
@@ -147,6 +149,9 @@ programs = {
         enable = true;
         defaultEditor = true;
         vimAlias = true;
+        plugins = [
+            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+        ];
     };
 
     go = {
@@ -165,34 +170,38 @@ programs = {
         enable = true;
         profiles = {
             main_setup = {
-                outputs = {
-                    eDP1 = {
+                outputs = [
+                    {
+                        criteria = "eDP-1";
                         mode = "1920x1080";
-                        scale = 1;
-                    };
-                    DP1 = {
+                    }
+                    {
+                        criteria = "DP-1";
                         mode = "3840x2160";
                         scale = 1.35;
                         position = "1920,0";
-                    };
-                };
+                    }
+                ];
             };
             skere_setup = {
-                outputs = {
-                    eDP1 = {
+                outputs = [
+                    {
+                        criteria = "eDP-1";
                         mode = "1920x1080";
-                        scale = 1;
-                    };
-                    HDMI-A-2 = {
+                    }
+                    {
+                        criteria = "HDMI-A-2";
                         mode = "1680x1050";
                         position = "1920,0";
-                    };
-                };
+                    }
+                ];
             };
         };
 
     };
   };
+
+  home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./configs/nvim;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

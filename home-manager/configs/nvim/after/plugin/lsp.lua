@@ -77,5 +77,6 @@
   require("lspconfig").jdtls.setup{capabilities = capabilities}
   require("lspconfig").tsserver.setup{capabilities = capabilities}
   require("lspconfig").gopls.setup{capabilities = capabilities}
+  require("lspconfig").nil_ls.setup{capabilities = capabilities}
 
 

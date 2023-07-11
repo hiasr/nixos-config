@@ -60,7 +60,6 @@
     };
   };
 
-  # FIXME: Add the rest of your current configuration
 
   networking.hostName = "thonk";
 
@@ -78,11 +77,18 @@
   };
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
+  # For VM
   boot.loader.grub.enable = true;
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  # For bare metal 
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.devices = [ "nodev" ];
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.grub.useOSProber = true;
+  # 
+
   users.users = {
-    # FIXME: Replace with your username
     rubenh = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
@@ -93,7 +99,6 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = [ "wheel" "networkmanager" "docker" ];
     };
   };
@@ -107,6 +112,15 @@
     # Use keys only. Remove if you want to SSH using password (not recommended)
     passwordAuthentication = true;
   };
+
+  # Wayland stuff
+  security.polkit.enable = true;
+  hardware.opengl.enable = true;
+
+  # Audio
+  sound.enable = true;
+  nixpkgs.config.pulseaudio = true;
+  hardware.pulseaudio.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
