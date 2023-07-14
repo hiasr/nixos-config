@@ -126,6 +126,13 @@
   security.polkit.enable = true;
   hardware.opengl.enable = true;
 
+  services.xserver.enable = true;
+  services.xserver.displayManager.sessionPackages = [pkgs.sway];
+  services.xserver.displayManager.lightdm.enable = true;
+
+  services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = true;
+
   # Audio
   sound.enable = true;
   nixpkgs.config.pulseaudio = true;
