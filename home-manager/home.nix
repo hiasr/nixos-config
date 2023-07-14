@@ -216,7 +216,7 @@ programs = {
   home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./configs/nvim;
   # TODO: Change to nix config
   home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
-  # home.file."./.config/alacritty".source = config.lib.file.mkOutOfStoreSymlink ./configs/alacritty;
+  home.file."./.config/alacritty".source = config.lib.file.mkOutOfStoreSymlink ./configs/alacritty;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
