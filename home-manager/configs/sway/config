@@ -40,7 +40,7 @@ set $menu albert show
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-# output * bg /home/rubenh/.local/share/backgrounds/lake.jpg fill 
+output * bg ~/.config/sway/backgrounds/lake.jpg fill 
 # output * bg /home/rubenh/.local/share/backgrounds/2022-01-26-07-52-14-ytkkbowirm061.jpg fill 
 #output * bg /home/rubenh/.local/share/backgrounds/mountain_blue.png fill 
 # output * bg /home/rubenh/.local/share/backgrounds/city_red.jpg fill  
