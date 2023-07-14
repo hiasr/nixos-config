@@ -5,6 +5,7 @@
   # You can import other home-manager modules here
   imports = [
     ./sway.nix
+    ./tmux.nix
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
 
@@ -172,14 +173,6 @@ programs = {
 
     starship = {
         enable = true;
-    };
-
-    tmux = {
-        enable = true;
-        disbleConfirmationPrompt = true;
-        keyMode = "vi";
-        mouse = true;
-        newSession = true;
     };
 
   };
