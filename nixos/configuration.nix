@@ -60,6 +60,11 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    git
+    home-manager
+  ];
+
 
   networking.hostName = "thonk";
 
@@ -82,12 +87,13 @@
 
   # For bare metal 
   # boot.loader.grub.enable = true;
-  # boot.loader.grub.devices = [ "nodev" ];
+  boot.loader.grub.devices = [ "nodev" ];
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.useOSProber = true;
   # 
 
+  programs.fish.enable = true;
   users.users = {
     rubenh = {
       # TODO: You can set an initial password for your user.
@@ -100,6 +106,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       extraGroups = [ "wheel" "networkmanager" "docker" ];
+      shell = pkgs.fish;
     };
   };
 
@@ -108,9 +115,11 @@
   services.openssh = {
     enable = true;
     # Forbid root login through SSH.
-    permitRootLogin = "no";
+    settings = {
+    PermitRootLogin = "no";
     # Use keys only. Remove if you want to SSH using password (not recommended)
-    passwordAuthentication = true;
+    PasswordAuthentication = true;
+};
   };
 
   # Wayland stuff

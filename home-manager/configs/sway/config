@@ -40,7 +40,7 @@ set $menu albert show
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/rubenh/.local/share/backgrounds/lake.jpg fill 
+# output * bg /home/rubenh/.local/share/backgrounds/lake.jpg fill 
 # output * bg /home/rubenh/.local/share/backgrounds/2022-01-26-07-52-14-ytkkbowirm061.jpg fill 
 #output * bg /home/rubenh/.local/share/backgrounds/mountain_blue.png fill 
 # output * bg /home/rubenh/.local/share/backgrounds/city_red.jpg fill  
@@ -94,7 +94,7 @@ output * bg /home/rubenh/.local/share/backgrounds/lake.jpg fill
     bindsym $mod+Space exec $menu
 
     # Launch browser
-    bindsym $mod+F2 exec flatpak run org.mozilla.firefox
+    bindsym $mod+F2 exec firefox
 
     # Launch Doom Emacs
     bindsym $mod+d exec emacs

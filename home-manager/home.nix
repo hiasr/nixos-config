@@ -65,7 +65,17 @@
     discord
     spotify
     docker
+    nodejs
+    python3
+    nil
+
+    # fonts
+    nerdfonts
+    iosevka
   ];
+  fonts.fontconfig.enable = true;
+
+
 
 programs = {
     home-manager.enable = true;
@@ -105,6 +115,8 @@ programs = {
             cat = "bat";
             less = "bat";
             sv = "source venv/bin/activate";
+            nr = "sudo nixos-rebuild --flake .#thonk";
+            hm = "home-manager --flake .#rubenh@thonk";
         };
     };
 
@@ -202,6 +214,9 @@ programs = {
   };
 
   home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./configs/nvim;
+  # TODO: Change to nix config
+  home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
+  home.file."./tmux.conf".source = config.lib.file.mkOutOfStoreSymlink ./configs/tmux/tmux.conf;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

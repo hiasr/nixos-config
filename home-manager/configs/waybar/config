@@ -30,7 +30,8 @@
     "clock": {
         "interval": 10,
         "timezone": "Europe/Brussels",
-        "format": "<span font='20' rise='-1000'></span>   {:%H:%M}",
+        //"format": "<span font='20' rise='-1000'> </span>  {:%H:%M}",
+        "format": "  {:%H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "yeet {:%Y-%m-%d}"
     },
