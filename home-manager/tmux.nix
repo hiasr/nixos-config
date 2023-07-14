@@ -1,15 +1,15 @@
 
 { pkgs, config, lib, ...} : 
 {
-    tmux = {
+    programs.tmux = {
         enable = true;
-        packages = with pkgs.tmuxPlugins; [
-            tmux-sensible
-            tmux-yank
-            tmux-resurrect
-            tmux-continuum
+        plugins = with pkgs.tmuxPlugins; [
+            sensible
+            yank
+            resurrect
+            continuum
             vim-tmux-navigator
-            tmux-logging
+            logging
             tmux-fzf
             catppuccin
         ];
