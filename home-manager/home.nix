@@ -58,7 +58,6 @@
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
     thunderbird
-    tmux
     vscode
     waybar
     obsidian
@@ -173,6 +172,14 @@ programs = {
 
     starship = {
         enable = true;
+    };
+
+    tmux = {
+        enable = true;
+        disbleConfirmationPrompt = true;
+        keyMode = "vi";
+        mouse = true;
+        newSession = true;
     };
 
   };
