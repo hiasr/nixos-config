@@ -10,7 +10,7 @@ return {
         'mfussenegger/nvim-dap',
         version = "0.6.0",
         dependencies = {
-           "mfussenegger/nvim-dap-python",
+            "mfussenegger/nvim-dap-python",
             "rcarriga/nvim-dap-ui",
             "leoluz/nvim-dap-go",
             "theHamsta/nvim-dap-virtual-text",
@@ -35,10 +35,50 @@ return {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'
     },
-
+    {
+        "ThePrimeagen/harpoon",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            'nvim-telescope/telescope.nvim',
+        },
+        config = function()
+            require('telescope').load_extension('harpoon')
+            require('harpoon').setup({
+                tabline = true
+            })
+        end
+    },
     {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup() end
+    },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-neotest/neotest-go",
+        },
+        config = function()
+            -- get neotest namespace (api call creates or returns namespace)
+            local neotest_ns = vim.api.nvim_create_namespace("neotest")
+            vim.diagnostic.config({
+                virtual_text = {
+                    format = function(diagnostic)
+                        local message =
+                        diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+                        return message
+                    end,
+                },
+            }, neotest_ns)
+            require("neotest").setup({
+                -- your neotest config here
+                adapters = {
+                    require("neotest-go"),
+                },
+            })
+        end,
     },
     {
         "windwp/nvim-ts-autotag",

@@ -1,7 +1,7 @@
-require('bufferline').setup {
-    highlights = {
-        buffer_selected = {
-            italic = false,
-        }
-    }
-}
+-- require('bufferline').setup {
+--     highlights = {
+--         buffer_selected = {
+--             italic = false,
+--         }
+--     }
+-- }

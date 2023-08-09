@@ -1,12 +1,12 @@
 return {
     -- UI and UX
-    { 'akinsho/bufferline.nvim',
-        version = "v4.1.0",
-        dependencies = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            require("bufferline").setup()
-        end
-    },
+    -- { 'akinsho/bufferline.nvim',
+    --     version = "v4.1.0",
+    --     dependencies = 'kyazdani42/nvim-web-devicons',
+    --     config = function()
+    --         require("bufferline").setup()
+    --     end
+    -- },
     {
         'numToStr/Navigator.nvim',
     },
@@ -22,7 +22,7 @@ return {
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzf-native.nvim'
-        }
+        },
     },
 
     {
@@ -39,7 +39,15 @@ return {
         config = function()
             require("toggleterm").setup()
         end },
-    'TimUntersberger/neogit', -- Magit for Neovim
+    {
+        'NeogitOrg/neogit', -- Magit for Neovim
+        dependencies = {
+            "nvim-lua/plenary.nvim", -- required
+            "nvim-telescope/telescope.nvim", -- optional
+            "sindrets/diffview.nvim", -- optional
+        },
+        config = true
+    },
 
     {
         'nvim-lualine/lualine.nvim',

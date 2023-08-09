@@ -6,7 +6,7 @@ window:
     y: 5
 
 shell:
-  program: fish
+  program: /bin/zsh
   args:
     - -l
     - -c

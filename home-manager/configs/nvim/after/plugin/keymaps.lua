@@ -3,8 +3,8 @@ local default_opts = {noremap = true, silent = true}
 local expr_opts = {noremap = true, expr = true, silent = true}
 
 
-keymap("n", "<S-h>", ":bprevious<CR>", default_opts)
-keymap("n", "<S-l>", ":bnext<CR>", default_opts)
+keymap("n", "<S-h>", "<cmd>lua require('harpoon.ui').nav_prev()<cr>", default_opts)
+keymap("n", "<S-l>", "<cmd>lua require('harpoon.ui').nav_next()<cr>", default_opts)
 
 
 -- Map leader to space

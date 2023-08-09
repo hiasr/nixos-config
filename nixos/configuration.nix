@@ -93,7 +93,7 @@
   # boot.loader.grub.useOSProber = true;
   # 
 
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
   users.users = {
     rubenh = {
       # TODO: You can set an initial password for your user.
@@ -106,7 +106,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       extraGroups = [ "wheel" "networkmanager" "docker" ];
-      shell = pkgs.fish;
+      shell = pkgs.zsh;
     };
   };
 

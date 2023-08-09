@@ -5,7 +5,7 @@
   # You can import other home-manager modules here
   imports = [
     ./sway.nix
-    ./tmux.nix
+    # ./tmux.nix
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
 
@@ -68,9 +68,11 @@
     nodejs
     python3
     nil
+    gcc
+    ulauncher
 
     # fonts
-    nerdfonts
+    # nerdfonts
     iosevka
   ];
   fonts.fontconfig.enable = true;
@@ -95,6 +97,12 @@ programs = {
         enable = true;
     };
 
+    direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+    };
+
     eww = {
         enable = true;
         configDir = ./configs/eww;
@@ -104,12 +112,21 @@ programs = {
         enable = true;
     };
 
-    fish = {
+    zsh = {
         enable = true;
-        interactiveShellInit = ''
-        set fish_greeting
-        '';
-
+        dotDir = ".config/zsh";
+        enableAutosuggestions = true;
+        autocd = true;
+        envExtra = lib.concatStringsSep "\n" [
+            "AWS_PROFILE=dev-2"
+            "_JAVA_AWT_WM_NONREPARENTING=1"
+            "SHELL=/usr/bin/zsh"
+            ("PATH=" + lib.concatStringsSep ":" [
+                "${config.home.homeDirectory}/.local/bin"
+                "${config.home.homeDirectory}/.cargo/bin"
+                "${config.home.homeDirectory}/go/bin"
+                "$PATH"
+            ])];
         shellAliases = {
             ls = "exa";
             ll = "exa -l";
@@ -117,10 +134,26 @@ programs = {
             l = "exa -l";
             cat = "bat";
             less = "bat";
+            dc = "docker-compose";
             sv = "source venv/bin/activate";
             nr = "sudo nixos-rebuild --flake .#thonk";
             hm = "home-manager --flake .#rubenh@thonk";
         };
+        oh-my-zsh = {
+            enable = true;
+            plugins = ["git" "nvm"];
+        };
+        plugins = [
+            {
+                name= "zsh-syntax-highlighting";
+                src = pkgs.fetchFromGitHub {
+                    owner = "zsh-users";
+                    repo = "zsh-syntax-highlighting";
+                    rev = "1386f12";
+                    sha256 = "iKx7lsQCoSAbpANYFkNVCZlTFdwOEI34rx/h1rnraSg=";
+                };
+            }
+        ];
     };
 
     firefox = {
@@ -164,9 +197,10 @@ programs = {
         enable = true;
         defaultEditor = true;
         vimAlias = true;
-        plugins = [
-            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-        ];
+        # plugins = [
+        #     pkgs.vimPlugins.nvim-treesitter
+        #     pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+        # ];
     };
 
     go = {
@@ -216,8 +250,8 @@ programs = {
     };
   };
 
-  home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink ./configs/nvim;
-  # TODO: Change to nix config
+
+  home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
   home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
   home.file."./.config/alacritty".source = config.lib.file.mkOutOfStoreSymlink ./configs/alacritty;
 
