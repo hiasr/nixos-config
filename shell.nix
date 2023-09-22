@@ -8,7 +8,7 @@
     buildInputs = with pkgs; [ nix home-manager git stdenv gcc];
     shellHook = ''
         # fixes libstdc++ issues and libgl.so issues
-        LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/:/run/opengl-driver/lib/
+        # LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/:/run/opengl-driver/lib/
         # fixes xcb issues :
         QT_PLUGIN_PATH=${pkgs.qt5.qtbase}/${pkgs.qt5.qtbase.qtPluginPrefix}
       '';

@@ -16,6 +16,7 @@ smart_gaps on
 exec_always pkill kanshi; exec kanshi
 exec albert
 exec eww daemon
+exec lxpolkit
 
 # Config compose key
 input * xkb_options compose:rwin
@@ -57,10 +58,10 @@ output * bg ~/.config/sway/backgrounds/lake.jpg fill
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+          timeout 600 'swaylock -f -c 000000' \
+          # timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+          before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -96,8 +97,8 @@ output * bg ~/.config/sway/backgrounds/lake.jpg fill
     # Launch browser
     bindsym $mod+F2 exec firefox
 
-    # Launch Doom Emacs
-    bindsym $mod+d exec emacs
+    # Launch Obsidian
+    bindsym $mod+F3 exec flatpak run md.obsidian.Obsidian
 
     #Launch Flameshot
     # bindsym $mod+F1 exec QT_QPA_PLATFORM=xcb flameshot gui
@@ -124,6 +125,9 @@ output * bg ~/.config/sway/backgrounds/lake.jpg fill
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
+
+    # Lock sway
+    bindsym $mod+Shift+x exec swaylock -f -c 000000
 
     # Exit sway (logs you out of your Wayland session)
     # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'

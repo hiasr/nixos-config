@@ -1,7 +1,15 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, ... }: 
+
+let 
+    unstable = import inputs.nixpkgs-unstable {
+        system = pkgs.system;
+        config.allowUnfree = true;
+    };
+in
+{
   # You can import other home-manager modules here
   imports = [
     ./sway.nix
@@ -51,6 +59,7 @@
         VISUAL = "nvim";
         BROWSER = "firefox";
         _JAVA_AWT_WM_NONREPARENTING = "1";
+        LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib/:/run/opengl-driver/lib/";
     };
   };
 
@@ -58,23 +67,23 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    thunderbird
+    unstable.thunderbird-wayland
     vscode
-    waybar
-    obsidian
     discord
     spotify
     docker
     nodejs
-    python3
     nil
     gcc
     ulauncher
+    unstable.obsidian
+    gpick
 
     # fonts
-    # nerdfonts
+    nerdfonts
     iosevka
   ];
+
   fonts.fontconfig.enable = true;
 
 
@@ -138,6 +147,7 @@ programs = {
             sv = "source venv/bin/activate";
             nr = "sudo nixos-rebuild --flake .#thonk";
             hm = "home-manager --flake .#rubenh@thonk";
+            cd = "z";
         };
         oh-my-zsh = {
             enable = true;
@@ -158,6 +168,7 @@ programs = {
 
     firefox = {
         enable = true;
+        package = unstable.firefox-wayland;
     };
 
     gh = {
@@ -197,10 +208,6 @@ programs = {
         enable = true;
         defaultEditor = true;
         vimAlias = true;
-        # plugins = [
-        #     pkgs.vimPlugins.nvim-treesitter
-        #     pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-        # ];
     };
 
     go = {
@@ -212,47 +219,15 @@ programs = {
         enable = true;
     };
 
-  };
-
-  services = {
-    kanshi = {
+    zoxide = {
         enable = true;
-        profiles = {
-            main_setup = {
-                outputs = [
-                    {
-                        criteria = "eDP-1";
-                        mode = "1920x1080";
-                    }
-                    {
-                        criteria = "DP-1";
-                        mode = "3840x2160";
-                        scale = 1.35;
-                        position = "1920,0";
-                    }
-                ];
-            };
-            skere_setup = {
-                outputs = [
-                    {
-                        criteria = "eDP-1";
-                        mode = "1920x1080";
-                    }
-                    {
-                        criteria = "HDMI-A-2";
-                        mode = "1680x1050";
-                        position = "1920,0";
-                    }
-                ];
-            };
-        };
-
+        enableZshIntegration = true;
     };
+
   };
 
 
   home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
-  home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
   home.file."./.config/alacritty".source = config.lib.file.mkOutOfStoreSymlink ./configs/alacritty;
 
   # Nicely reload system units when changing configs

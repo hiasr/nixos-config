@@ -1,9 +1,48 @@
 return {
     -- LSP stuff
     'neovim/nvim-lspconfig',
-    'hrsh7th/cmp-nvim-lsp',
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
+    {
+        'williamboman/mason.nvim',
+        dependencies = {
+            'williamboman/mason-lspconfig.nvim',
+            'hrsh7th/cmp-nvim-lsp',
+        },
+        config = function()
+            require("mason").setup()
+            require("mason-lspconfig").setup {
+                ensure_installed = {
+                    "bashls",
+                    "dockerls",
+                    "gopls",
+                    "pyright",
+                    "rust_analyzer",
+                    "nil_ls",
+                    "lua_ls",
+                    "jdtls",
+                    "tsserver",
+                }
+            }
+            require("mason-lspconfig").setup_handlers {
+                function(server_name)
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+                    require("lspconfig")[server_name].setup { capabilities = capabilities }
+                end,
+                ["lua_ls"] = function()
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+                    require("lspconfig").lua_ls.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { 'vim' },
+                                }
+                            }
+                        }
+                    }
+                end
+            }
+        end
+    },
 
     -- DAP stuff
     {

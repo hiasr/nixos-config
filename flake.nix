@@ -27,7 +27,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -38,7 +38,7 @@
         # "x86_64-darwin"
       ];
     in
-    rec {
+    {
       # Your custom packages
       # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
@@ -77,7 +77,10 @@
       homeConfigurations = {
         "rubenh@thonk" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = { 
+            inherit inputs outputs;
+            # pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux; 
+          };
           modules = [
             # > Our main home-manager configuration file <
             ./home-manager/home.nix

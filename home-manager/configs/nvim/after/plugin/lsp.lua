@@ -52,31 +52,3 @@
   })
 
 
-  -- Setup required lsp servers
-  require("mason").setup()
-  require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "hls", "jdtls"}
-  })
-
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-  require("lspconfig").hls.setup{capabilities = capabilities}
-  require("lspconfig").pyright.setup{capabilities = capabilities}
-
-  require("lspconfig").lua_ls.setup{
-      settings = {
-      Lua = {
-          diagnostics = {
-              globals = {'vim'},
-          }
-      }
-  },capabilities = capabilities}
-
-  require("lspconfig").rust_analyzer.setup{capabilities = capabilities}
-  require("lspconfig").jdtls.setup{capabilities = capabilities}
-  require("lspconfig").tsserver.setup{capabilities = capabilities}
-  require("lspconfig").gopls.setup{capabilities = capabilities}
-  require("lspconfig").nil_ls.setup{capabilities = capabilities}
-
-
