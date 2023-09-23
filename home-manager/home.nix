@@ -79,6 +79,8 @@ in
     nil
     gcc
     unstable.obsidian
+    cargo
+    rustc
 
     # fonts
     nerdfonts

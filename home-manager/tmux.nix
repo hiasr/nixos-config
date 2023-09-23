@@ -61,8 +61,8 @@ set -sg escape-time 0
 set -g @resurrect-strategy-nvim 'session'
 
 # Fix colors
-set -g default-terminal "tmux-256color"
-set -ag terminal-overrides ",xterm-256color:RGB"
+set -g default-terminal "screen-256color"
+#set -ag terminal-overrides ",xterm-256color:RGB"
 
 # Enable mouse
 set -g mouse on
