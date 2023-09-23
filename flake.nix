@@ -35,7 +35,7 @@
         # "i686-linux"
         "x86_64-linux"
         # "aarch64-darwin"
-        # "x86_64-darwin"
+        "x86_64-darwin"
       ];
     in
     {
@@ -80,6 +80,16 @@
           extraSpecialArgs = { 
             inherit inputs outputs;
             # pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux; 
+          };
+          modules = [
+            # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+          ];
+        };
+        "rubenh@mac" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-darwin; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { 
+            inherit inputs outputs;
           };
           modules = [
             # > Our main home-manager configuration file <

@@ -11,9 +11,11 @@ let
 in
 {
   # You can import other home-manager modules here
-  imports = [
-    ./sway.nix
-    # ./tmux.nix
+  imports = [./tmux.nix];
+  #imports = if pkgs.system == "x86_64-linux" then [ ./sway.nix] else [];
+    #(if pkgs.system == "x86_64-darwin" then [] else []) ; 
+    #[
+    #./tmux.nix
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
 
@@ -22,7 +24,7 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-  ];
+  #];
 
   nixpkgs = {
     # You can add overlays here
@@ -51,33 +53,32 @@ in
     };
   };
 
-  home =  {
-    username = "rubenh";
-    homeDirectory = "/home/${config.home.username}";
-    sessionVariables = {
+    home =  {
+      username = "rubenh";
+      homeDirectory = if lib.strings.hasInfix "darwin" pkgs.system then "/Users/${config.home.username}" else "/home/${config.home.username}";
+      sessionVariables = {
         EDITOR = "nvim";
         VISUAL = "nvim";
         BROWSER = "firefox";
         _JAVA_AWT_WM_NONREPARENTING = "1";
-        LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib/:/run/opengl-driver/lib/";
+      };
     };
-  };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    unstable.thunderbird-wayland
+    # unstable.thunderbird-wayland
     vscode
+    tmux
+    exa
     discord
     spotify
     docker
     nodejs
     nil
     gcc
-    ulauncher
     unstable.obsidian
-    gpick
 
     # fonts
     nerdfonts
@@ -112,23 +113,12 @@ programs = {
         nix-direnv.enable = true;
     };
 
-    eww = {
-        enable = true;
-        configDir = ./configs/eww;
-    };
-
-    exa = {
-        enable = true;
-    };
-
     zsh = {
         enable = true;
         dotDir = ".config/zsh";
         enableAutosuggestions = true;
         autocd = true;
         envExtra = lib.concatStringsSep "\n" [
-            "AWS_PROFILE=dev-2"
-            "_JAVA_AWT_WM_NONREPARENTING=1"
             "SHELL=/usr/bin/zsh"
             ("PATH=" + lib.concatStringsSep ":" [
                 "${config.home.homeDirectory}/.local/bin"
@@ -164,11 +154,6 @@ programs = {
                 };
             }
         ];
-    };
-
-    firefox = {
-        enable = true;
-        package = unstable.firefox-wayland;
     };
 
     gh = {

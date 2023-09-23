@@ -7,6 +7,15 @@
         waybar
     ];
 
+    programs = {
+      eww = {
+        enable = true;
+        configDir = ./configs/eww;
+      };
+      firefox.enable = true;
+    };
+        
+
 
     wayland.windowManager.sway = {
         enable = true;

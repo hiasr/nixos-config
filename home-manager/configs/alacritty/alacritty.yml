@@ -6,7 +6,7 @@ window:
     y: 5
 
 shell:
-  program: /bin/zsh
+  program: zsh
   args:
     - -l
     - -c

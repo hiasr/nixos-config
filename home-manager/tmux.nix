@@ -38,7 +38,7 @@ bind < swap-pane -U       # swap current pane with the previous one
 bind x kill-pane
 
 # fzf sessions
-bind S run-shell -b "~/.tmux/plugins/tmux-fzf/scripts/session.sh attach"
+#bind S run-shell -b "~/.tmux/plugins/tmux-fzf/scripts/session.sh attach"
 
 # window navigation
 set -g base-index 1
