@@ -33,6 +33,7 @@ wk.register({
     b = {
         name = "Buffer",
         d = { "<cmd>bd<cr>", "Delete buffer" },
+        t = { "<cmd>NvimTreeFindFile<cr>", "Focus file in nvim-tree"}
     },
     c = {
         name = "Code",
@@ -55,6 +56,11 @@ wk.register({
         g = {builtin.git_files, "Find git file"},
         b = {builtin.buffers, "Find buffers"},
         h = {builtin.help_tags, "Find neovim doc"},
+    },
+    l = {
+        name = "LSP",
+        r = {"<cmd>LspRestart<CR>", "Restart LSP"},
+        i = {"<cmd>LspInfo<CR>", "LSP Info"},
     }
 
 

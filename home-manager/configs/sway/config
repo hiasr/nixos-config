@@ -3,7 +3,8 @@
 ### Random stuff
 # Remove titlebar and set smart_borders
 default_border pixel 1
-client.focused #b4befe #b4befe #b4befe #b4befe #b4befe   
+client.focused #f5c2e7 #f5c2e7 #f5c2e7 #f5c2e7 #f5c2e7
+
 
 # smart_borders on
 
@@ -14,7 +15,6 @@ smart_gaps on
 
 # Launch kanshi (hotplug)
 exec_always pkill kanshi; exec kanshi
-exec albert
 exec eww daemon
 exec lxpolkit
 
@@ -36,12 +36,12 @@ set $term alacritty
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu albert show
+set $menu rofi -show drun
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.config/sway/backgrounds/lake.jpg fill 
+output * bg ~/.config/sway/backgrounds/purple_lake.jpg fill 
 # output * bg /home/rubenh/.local/share/backgrounds/2022-01-26-07-52-14-ytkkbowirm061.jpg fill 
 #output * bg /home/rubenh/.local/share/backgrounds/mountain_blue.png fill 
 # output * bg /home/rubenh/.local/share/backgrounds/city_red.jpg fill  
@@ -104,7 +104,7 @@ exec swayidle -w \
     # bindsym $mod+F1 exec QT_QPA_PLATFORM=xcb flameshot gui
     bindsym $mod+F1 exec grim -g "$(slurp)" - | wl-copy
 
-    bindsym $mod+p exec eww open todoist --toggle --screen $(swaymsg -t get_outputs | jq -r 'map(.active==true) | index(true)')
+    bindsym $mod+p exec ~/.nix-profile/bin/eww open todoist --toggle --screen $(swaymsg -t get_outputs | jq -r 'map(.active==true) | index(true)')
 
 
     # Set brigthbess
@@ -130,7 +130,7 @@ exec swayidle -w \
     bindsym $mod+Shift+x exec swaylock -f -c 000000
 
     # Exit sway (logs you out of your Wayland session)
-    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -218,6 +218,8 @@ exec swayidle -w \
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
+
+    for_window [app_id="python3"] floating enable
 #
 # Scratchpad:
 #
@@ -278,3 +280,4 @@ bar swaybar_command waybar
 exec /home/rubenh/.config/sway/init_workspaces.py
 
 include /etc/sway/config.d/*
+include ~/.config/sway/config.d/*.conf

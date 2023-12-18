@@ -11,7 +11,7 @@ let
 in
 {
   # You can import other home-manager modules here
-  imports = [./tmux.nix];
+  imports = [./tmux.nix ./sway.nix];
   #imports = if pkgs.system == "x86_64-linux" then [ ./sway.nix] else [];
     #(if pkgs.system == "x86_64-darwin" then [] else []) ; 
     #[
@@ -69,22 +69,17 @@ in
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
     # unstable.thunderbird-wayland
-    vscode
     tmux
+    spotify
+    albert
     exa
     discord
-    spotify
-    docker
-    nodejs
-    nil
-    gcc
     unstable.obsidian
-    cargo
-    rustc
 
     # fonts
     nerdfonts
     iosevka
+    todoist
   ];
 
   fonts.fontconfig.enable = true;
@@ -93,10 +88,6 @@ in
 
 programs = {
     home-manager.enable = true;
-
-    alacritty = {
-        enable = true;
-    };
 
     bat = {
         enable = true;
@@ -120,12 +111,14 @@ programs = {
         dotDir = ".config/zsh";
         enableAutosuggestions = true;
         autocd = true;
+        initExtra = lib.concatStringsSep "\n" ["eval $(opam env)"];
         envExtra = lib.concatStringsSep "\n" [
             "SHELL=/usr/bin/zsh"
             ("PATH=" + lib.concatStringsSep ":" [
                 "${config.home.homeDirectory}/.local/bin"
                 "${config.home.homeDirectory}/.cargo/bin"
                 "${config.home.homeDirectory}/go/bin"
+                "${config.home.homeDirectory}/.spicetify"
                 "$PATH"
             ])];
         shellAliases = {
@@ -184,6 +177,7 @@ programs = {
             init = {
                 defaultBranch = "main";
             };
+            http.postbuffer = "157286400";
         };
         ignores = [
             "venv/"
@@ -199,6 +193,7 @@ programs = {
 
     go = {
         enable = true;
+        package = unstable.go;
     };
 
 

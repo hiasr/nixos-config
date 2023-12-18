@@ -24,6 +24,9 @@ vim.opt.number = true
 -- Use system clipboard
 vim.opt.clipboard = "unnamedplus"
 
+-- Necessary for nvim-cmp
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
 
 -- Setup Lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

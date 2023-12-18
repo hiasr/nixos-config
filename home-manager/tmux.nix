@@ -57,12 +57,15 @@ bind -n M-L next-window
 set -sg escape-time 0
 
 # Restore neovim session
-# set -g @continuum-restore 'on'
+set -g @continuum-restore 'on'
 set -g @resurrect-strategy-nvim 'session'
 
+# Autostart tmux on boot
+set -g @continuum-boot 'on'
+
 # Fix colors
-set -g default-terminal "screen-256color"
-#set -ag terminal-overrides ",xterm-256color:RGB"
+set -g default-terminal "tmux-256color"
+set -ag terminal-overrides ",xterm-256color:RGB"
 
 # Enable mouse
 set -g mouse on

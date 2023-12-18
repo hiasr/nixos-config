@@ -2,7 +2,7 @@
 
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: Ioveska, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: Hack, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 14px;
 }
 
@@ -35,6 +35,7 @@ window#waybar.hidden {
     /* Avoid rounded borders under each workspace name */
     border: none;
     border-radius: 0;
+    color: white;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */

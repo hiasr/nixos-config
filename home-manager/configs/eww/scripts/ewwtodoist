@@ -1,4 +1,5 @@
 #!/bin/bash
 
-/home/rubenh/.local/bin/todoist q "$1" &
-eww close todoist
+echo "test" >> /tmp/eww-todoist
+todoist q "$1" &
+~/.nix-profile/bin/eww close todoist

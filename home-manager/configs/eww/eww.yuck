@@ -81,7 +81,7 @@
        :space-evenly false
        "Todoist:"
     (input :class "input"
-           :onaccept "scripts/ewwtodoist '{}'"
+           :onaccept "/home/rubenh/nixos-config/home-manager/configs/eww/scripts/ewwtodoist '{}'"
            :timeout "300ms"
            :hexpand true
      )))

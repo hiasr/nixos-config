@@ -24,6 +24,10 @@ return {
             'nvim-telescope/telescope-fzf-native.nvim'
         },
     },
+    {
+        "j-hui/fidget.nvim",
+        opts = {}
+    },
 
     {
         'kyazdani42/nvim-tree.lua',
@@ -61,11 +65,19 @@ return {
         end,
     },
     {
-        "ianding1/leetcode.vim",
-        config = function()
-            vim.g.leetcode_browser = "chrome"
-            vim.g.leetcode_solution_filetype = "python3"
-        end,
+        "epwalsh/obsidian.nvim",
+        lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+            "nvim-telescope/telescope.nvim",
+        },
+        opts = {
+            dir = "~/Obsidian",
+            completion = {
+                nvim_cmp = true,
+            }
+        }
     },
 
 

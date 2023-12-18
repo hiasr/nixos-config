@@ -1,6 +1,20 @@
 return {
     -- LSP stuff
-    'neovim/nvim-lspconfig',
+    {
+        'neovim/nvim-lspconfig',
+    },
+    {
+        'nvimtools/none-ls.nvim',
+        config = function()
+            require("null-ls").setup({
+                sources = {
+                    require("null-ls").builtins.formatting.black,
+                    require("null-ls").builtins.formatting.ocamlformat,
+                    -- require("null-ls").builtins.diagnostics.flake8;
+                }
+            })
+        end
+    },
     {
         'williamboman/mason.nvim',
         dependencies = {
@@ -15,20 +29,27 @@ return {
                     "dockerls",
                     "gopls",
                     "pyright",
-                    "rust_analyzer",
+                    -- "rust_analyzer",
                     "nil_ls",
                     "lua_ls",
                     "jdtls",
                     "tsserver",
+                    "ocamllsp",
+                    "clangd",
                 }
             }
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+                    if server_name == "rust_analyzer" then
+                        return
+                    end
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+                        .make_client_capabilities())
                     require("lspconfig")[server_name].setup { capabilities = capabilities }
                 end,
                 ["lua_ls"] = function()
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+                        .make_client_capabilities())
                     require("lspconfig").lua_ls.setup {
                         capabilities = capabilities,
                         settings = {
@@ -39,17 +60,50 @@ return {
                             }
                         }
                     }
-                end
+                end,
+                -- ["rust_analyzer"] = function()
+                --     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+                --         .make_client_capabilities())
+                --     require("lspconfig").rust_analyzer.setup {
+                --         capabilities = capabilities,
+                --         settings = {
+                --             ["rust-analyzer"] = {
+                --                 check = {
+                --                     command = "clippy"
+                --                 },
+                --                 checkOnSave = {
+                --                     command = "clippy"
+                --                 },
+                --                 cargo = {
+                --                     loadOutDirsFromCheck = true
+                --                 },
+                --                 procMacro = {
+                --                     enable = true
+                --                 },
+                --                 diagnostics = {
+                --                     enable = true,
+                --                     enableExperimental = true,
+                --                 },
+                --                 assist = {
+                --                     importGranularity = "module",
+                --                     importPrefix = "by_self",
+                --                 },
+                --                 inlayHints = {
+                --                     chainingHints = true,
+                --                     parameterHints = true,
+                --                     typeHints = true,
+                --                 },
+                --             }
+                --         }
+                --     }
+                -- end
             }
         end
     },
-
     -- DAP stuff
     {
         'mfussenegger/nvim-dap',
-        version = "0.6.0",
         dependencies = {
-            "mfussenegger/nvim-dap-python",
             "rcarriga/nvim-dap-ui",
             "leoluz/nvim-dap-go",
             "theHamsta/nvim-dap-virtual-text",
@@ -58,6 +112,28 @@ return {
         config = function()
             require("dap-config").setup()
         end
+    },
+    {
+        "mfussenegger/nvim-dap-python",
+        ft = "python",
+        dependencies = {
+            'mfussenegger/nvim-dap',
+        }
+    },
+    {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "mfussenegger/nvim-dap"
+        },
+        config = function()
+            require("mason-nvim-dap").setup()
+        end
+    },
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^3', -- Recommended
+        ft = { 'rust' },
     },
     -- Autocomplete stuff
     'hrsh7th/nvim-cmp',
@@ -70,6 +146,7 @@ return {
     'sbdchd/neoformat',
     'L3MON4D3/LuaSnip',
     'elkowar/yuck.vim',
+    'tpope/vim-surround',
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'
@@ -106,7 +183,7 @@ return {
                 virtual_text = {
                     format = function(diagnostic)
                         local message =
-                        diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+                            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
                         return message
                     end,
                 },

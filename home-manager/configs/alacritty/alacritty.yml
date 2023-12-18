@@ -1,6 +1,6 @@
 window:
   decorations: none
-  opacity: 0.98
+  opacity: 0.85
   padding:
     x: 5
     y: 5

@@ -3,8 +3,19 @@ local default_opts = {noremap = true, silent = true}
 local expr_opts = {noremap = true, expr = true, silent = true}
 
 
+-- Harpoon keybindings
 keymap("n", "<S-h>", "<cmd>lua require('harpoon.ui').nav_prev()<cr>", default_opts)
 keymap("n", "<S-l>", "<cmd>lua require('harpoon.ui').nav_next()<cr>", default_opts)
+keymap("n", "<M-1>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", default_opts)
+keymap("n", "<M-2>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", default_opts)
+keymap("n", "<M-3>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", default_opts)
+keymap("n", "<M-4>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", default_opts)
+keymap("n", "<M-5>", "<cmd>lua require('harpoon.ui').nav_file(5)<cr>", default_opts)
+keymap("n", "<M-6>", "<cmd>lua require('harpoon.ui').nav_file(6)<cr>", default_opts)
+keymap("n", "<M-7>", "<cmd>lua require('harpoon.ui').nav_file(7)<cr>", default_opts)
+keymap("n", "<M-8>", "<cmd>lua require('harpoon.ui').nav_file(8)<cr>", default_opts)
+keymap("n", "<M-9>", "<cmd>lua require('harpoon.ui').nav_file(9)<cr>", default_opts)
+keymap("n", "<M-0>", "<cmd>lua require('harpoon.ui').nav_file(10)<cr>", default_opts)
 
 
 -- Map leader to space
