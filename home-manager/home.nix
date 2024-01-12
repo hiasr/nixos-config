@@ -75,6 +75,7 @@ in
     exa
     discord
     unstable.obsidian
+    lazygit
 
     # fonts
     nerdfonts
@@ -115,6 +116,7 @@ programs = {
         envExtra = lib.concatStringsSep "\n" [
             "SHELL=/usr/bin/zsh"
             ("PATH=" + lib.concatStringsSep ":" [
+                "${config.home.homeDirectory}/.tfenv/bin:$PATH"
                 "${config.home.homeDirectory}/.local/bin"
                 "${config.home.homeDirectory}/.cargo/bin"
                 "${config.home.homeDirectory}/go/bin"
@@ -128,11 +130,12 @@ programs = {
             l = "exa -l";
             cat = "bat";
             less = "bat";
-            dc = "docker-compose";
+            dc = "docker compose";
             sv = "source venv/bin/activate";
             nr = "sudo nixos-rebuild --flake .#thonk";
             hm = "home-manager --flake .#rubenh@thonk";
             cd = "z";
+            tf = "terraform";
         };
         oh-my-zsh = {
             enable = true;
@@ -153,6 +156,7 @@ programs = {
 
     gh = {
         enable = true;
+        package = pkgs.gitAndTools.gh;
     };
 
     git = {

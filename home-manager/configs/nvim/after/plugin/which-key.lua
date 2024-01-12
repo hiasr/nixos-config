@@ -4,11 +4,18 @@ local builtin = require('telescope.builtin')
 wk.register({
     g = {
         name = "Git",
-        g = { "<cmd>Neogit<cr>", "Open Neogit" }
+        g = { "<cmd>Neogit<cr>", "Open Neogit" },
+        s = { "<cmd>lua require('gitsigns').stage_hunk()<cr>", "Stage hunk" },
+        r = { "<cmd>lua require('gitsigns').reset_hunk()<cr>", "Reset hunk" },
+        S = { "<cmd>lua require('gitsigns').stage_buffer()<cr>", "Stage buffer" },
+        b = { "<cmd>lua require('gitsigns').blame_line{full=true}<cr>", "Blame line" },
+
     },
     t = {
         name = "Terminal",
-        t = { "<cmd>ToggleTerm<cr>", "Toggle Terminal" }
+        t = { "<cmd>ToggleTerm<cr>", "Toggle Terminal" },
+        f = { "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal" },
+        g = { '<cmd>TermExec cmd="lazygit && exit" direction=float<cr>', "Toggle Floating Terminal" }
     },
     w = {
         name = "Window",
@@ -56,12 +63,20 @@ wk.register({
         g = {builtin.git_files, "Find git file"},
         b = {builtin.buffers, "Find buffers"},
         h = {builtin.help_tags, "Find neovim doc"},
+        t = {"<cmd>TodoTelescope<cr>", "Find TODOs"},
     },
     l = {
         name = "LSP",
         r = {"<cmd>LspRestart<CR>", "Restart LSP"},
         i = {"<cmd>LspInfo<CR>", "LSP Info"},
+        t = { require('trouble').toggle, "Toggle Trouble"},
     }
-
-
 }, { prefix = "<leader>"})
+
+wk.register({
+    g = {
+        name = "Git",
+        s = { function() require('gitsigns').stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, "Stage selected hunk"},
+        r = { function() require('gitsigns').reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, "Reset selected hunk"},
+    },
+}, { prefix = "<leader>", mode = "v"})

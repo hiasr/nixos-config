@@ -6,14 +6,44 @@ return {
     {
         'nvimtools/none-ls.nvim',
         config = function()
+            local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             require("null-ls").setup({
                 sources = {
                     require("null-ls").builtins.formatting.black,
                     require("null-ls").builtins.formatting.ocamlformat,
-                    -- require("null-ls").builtins.diagnostics.flake8;
-                }
+                    require("null-ls").builtins.formatting.goimports,
+                },
+                on_attach = function(client, bufnr)
+                    if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            group = augroup,
+                            buffer = bufnr,
+                            callback = function()
+                                vim.lsp.buf.format({ async = false })
+                            end,
+                        })
+                    end
+                end,
             })
         end
+    },
+    {
+        'nvimdev/lspsaga.nvim',
+        config = function()
+            require('lspsaga').setup({
+                symbol_in_winbar = {
+                    enable = false,
+                },
+                lightbulb = {
+                    enable = false,
+                },
+            })
+        end,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter', -- optional
+            'nvim-tree/nvim-web-devicons',     -- optional
+        }
     },
     {
         'williamboman/mason.nvim',
@@ -143,10 +173,26 @@ return {
     'saadparwaiz1/cmp_luasnip',
 
     -- General coding
-    'sbdchd/neoformat',
     'L3MON4D3/LuaSnip',
     'elkowar/yuck.vim',
     'tpope/vim-surround',
+    'sindrets/diffview.nvim',
+    'tpope/vim-fugitive',
+    {
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+        config = function()
+            require('gitsigns').setup()
+        end
+    },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+        },
+    },
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'

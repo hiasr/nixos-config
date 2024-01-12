@@ -10,7 +10,11 @@ return {
     {
         'numToStr/Navigator.nvim',
     },
-    'famiu/bufdelete.nvim',
+    -- {
+    --     "m4xshen/hardtime.nvim",
+    --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    --     opts = {}
+    -- },
 
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
@@ -28,7 +32,12 @@ return {
         "j-hui/fidget.nvim",
         opts = {}
     },
-
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+        }
+    },
     {
         'kyazdani42/nvim-tree.lua',
         requires = {
@@ -39,16 +48,19 @@ return {
         end,
     },
 
-    { "akinsho/toggleterm.nvim", version = "v2.5.0",
+    {
+        "akinsho/toggleterm.nvim",
+        version = "v2.5.0",
         config = function()
             require("toggleterm").setup()
-        end },
+        end
+    },
     {
-        'NeogitOrg/neogit', -- Magit for Neovim
+        'NeogitOrg/neogit',                  -- Magit for Neovim
         dependencies = {
-            "nvim-lua/plenary.nvim", -- required
+            "nvim-lua/plenary.nvim",         -- required
             "nvim-telescope/telescope.nvim", -- optional
-            "sindrets/diffview.nvim", -- optional
+            "sindrets/diffview.nvim",        -- optional
         },
         config = true
     },
@@ -79,15 +91,25 @@ return {
             }
         }
     },
-
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            require('leap').add_default_mappings()
+        end,
+        dependencies = {
+            "tpope/vim-repeat",
+        }
+    },
 
 
     -- Misc
     'tpope/vim-obsession',
     'github/copilot.vim',
-    { "folke/which-key.nvim",
+    {
+        "folke/which-key.nvim",
         config = function()
             require("which-key").setup {}
-        end },
+        end
+    },
 
 }

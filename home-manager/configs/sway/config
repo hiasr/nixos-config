@@ -60,6 +60,7 @@ output * bg ~/.config/sway/backgrounds/purple_lake.jpg fill
 #
 exec swayidle -w \
           timeout 600 'swaylock -f -c 000000' \
+          timeout 1200 'systemctl suspend' \
           # timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
           before-sleep 'swaylock -f -c 000000'
 #
@@ -220,6 +221,7 @@ exec swayidle -w \
     bindsym $mod+a focus parent
 
     for_window [app_id="python3"] floating enable
+    for_window [class="Matplotlib"] floating enable
 #
 # Scratchpad:
 #
@@ -280,4 +282,4 @@ bar swaybar_command waybar
 exec /home/rubenh/.config/sway/init_workspaces.py
 
 include /etc/sway/config.d/*
-include ~/.config/sway/config.d/*.conf
+# include ~/.config/sway/config.d/*.conf

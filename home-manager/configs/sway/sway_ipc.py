@@ -12,6 +12,19 @@ while True:
         time.sleep(1)
 
 
+class Workspace:
+    def __init__(self, name, num, focused):
+        self.name = name
+        self.num = num
+        self.focused = focused
+
+    def __str__(self):
+        return f"Workspace(name={self.name}, num={self.num}, focused={self.focused})"
+
+    def __repr__(self):
+        return self.__str__()
+
+
 def get_active_output(conn) -> str:
     outputs = conn.get_outputs()
     for output in outputs:
@@ -21,13 +34,16 @@ def get_active_output(conn) -> str:
             return output.name
     return ""
 
+
 def switch_to_workspace(conn, num, output) -> None:
     print(f"Switching to workspace {num} on output {output}")
     conn.command(f"workspace {num}:{output}")
 
+
 def move_container_to_workspace(conn, num, output) -> None:
     print(f"Moving container to workspace {num} on output {output}")
     conn.command(f"move container to workspace {num}:{output}{num}")
+
 
 def handle_tick(conn, e):
     if e.payload == "":
@@ -45,7 +61,7 @@ def handle_tick(conn, e):
     except:
         print("Can't parse to integer")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     sway.on(Event.TICK, handle_tick)
     sway.main()
-
