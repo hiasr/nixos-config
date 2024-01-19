@@ -15,7 +15,7 @@ wk.register({
         name = "Terminal",
         t = { "<cmd>ToggleTerm<cr>", "Toggle Terminal" },
         f = { "<cmd>ToggleTerm direction=float<cr>", "Toggle Floating Terminal" },
-        g = { '<cmd>TermExec cmd="lazygit && exit" direction=float<cr>', "Toggle Floating Terminal" }
+        g = { require("toggleterm_config").lazygit_toggle, "Toggle Lazygit" },
     },
     w = {
         name = "Window",

@@ -18,6 +18,9 @@ exec_always pkill kanshi; exec kanshi
 exec eww daemon
 exec lxpolkit
 
+exec sleep 5 && aw-qt --autostart-modules aw-server
+exec sleep 10 && aw-watcher-window-wayland &
+
 # Config compose key
 input * xkb_options compose:rwin
 
@@ -63,6 +66,11 @@ exec swayidle -w \
           timeout 1200 'systemctl suspend' \
           # timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
           before-sleep 'swaylock -f -c 000000'
+
+# Don't lock when fullscreen (e.g. watching videos)
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -108,14 +116,19 @@ exec swayidle -w \
     bindsym $mod+p exec ~/.nix-profile/bin/eww open todoist --toggle --screen $(swaymsg -t get_outputs | jq -r 'map(.active==true) | index(true)')
 
 
-    # Set brigthbess
+    # Set brightness
     bindsym XF86MonBrightnessUp exec light -A 10
     bindsym XF86MonBrightnessDown exec light -U 10
 
     # Change volume
-    bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 0 -10%
-    bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 0 +10%
+    bindsym XF86AudioLowerVolume exec pactl -- set-sink-volume 0 -5%
+    bindsym XF86AudioRaiseVolume exec pactl -- set-sink-volume 0 +5%
     bindsym XF86AudioMute exec pactl -- set-sink-mute 0 toggle
+
+    # Media keys
+    bindsym XF86AudioPlay exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+    bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+    bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -283,3 +296,4 @@ exec /home/rubenh/.config/sway/init_workspaces.py
 
 include /etc/sway/config.d/*
 # include ~/.config/sway/config.d/*.conf
+
