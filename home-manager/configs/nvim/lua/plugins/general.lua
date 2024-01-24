@@ -1,20 +1,8 @@
 return {
     -- UI and UX
-    -- { 'akinsho/bufferline.nvim',
-    --     version = "v4.1.0",
-    --     dependencies = 'kyazdani42/nvim-web-devicons',
-    --     config = function()
-    --         require("bufferline").setup()
-    --     end
-    -- },
     {
         'numToStr/Navigator.nvim',
     },
-    -- {
-    --     "m4xshen/hardtime.nvim",
-    --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    --     opts = {}
-    -- },
 
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
@@ -22,7 +10,6 @@ return {
     -- Additional applications
     {
         'nvim-telescope/telescope.nvim',
-        version = "0.1.1",
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzf-native.nvim'
@@ -50,7 +37,6 @@ return {
 
     {
         "akinsho/toggleterm.nvim",
-        version = "v2.5.0",
         config = function()
             require("toggleterm").setup()
         end
@@ -91,16 +77,52 @@ return {
             }
         }
     },
-    {
-        "ggandor/leap.nvim",
-        config = function()
-            require('leap').add_default_mappings()
-        end,
-        dependencies = {
-            "tpope/vim-repeat",
-        }
-    },
+    -- {
+    --     "ggandor/leap.nvim",
+    --     config = function()
+    --         require('leap').add_default_mappings()
+    --     end,
+    --     dependencies = {
+    --         "tpope/vim-repeat",
+    --     }
+    -- },
 
+    {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        opts = {},
+        keys = {
+            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            {
+                "S",
+                mode = { "n", "x", "o" },
+                function() require("flash").treesitter() end,
+                desc =
+                "Flash Treesitter"
+            },
+            {
+                "r",
+                mode = "o",
+                function() require("flash").remote() end,
+                desc =
+                "Remote Flash"
+            },
+            {
+                "R",
+                mode = { "o", "x" },
+                function() require("flash").treesitter_search() end,
+                desc =
+                "Treesitter Search"
+            },
+            {
+                "<c-s>",
+                mode = { "c" },
+                function() require("flash").toggle() end,
+                desc =
+                "Toggle Flash Search"
+            },
+        },
+    },
 
     -- Misc
     'tpope/vim-obsession',
@@ -111,5 +133,31 @@ return {
             require("which-key").setup {}
         end
     },
+    {
+        "karb94/neoscroll.nvim",
+        config = function()
+            require('neoscroll').setup {}
+        end
+    },
+    {
+        "jackMort/ChatGPT.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("chatgpt").setup {
+                api_key_cmd = "/home/rubenh/.config/openai/get_key.sh",
+                openai_params = {
+                    model = "gpt-4-1106-preview",
+                },
+                openai_edit_params = {
+                    model = "gpt-4-1106-preview",
+                }
+            }
+        end,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    }
 
 }

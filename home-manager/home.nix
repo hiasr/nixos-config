@@ -72,10 +72,11 @@ in
     tmux
     spotify
     albert
-    exa
+    eza
     discord
-    unstable.obsidian
     lazygit
+    udiskie
+    bitwarden-cli
 
     # fonts
     nerdfonts
@@ -124,10 +125,10 @@ programs = {
                 "$PATH"
             ])];
         shellAliases = {
-            ls = "exa";
-            ll = "exa -l";
-            la = "exa -la";
-            l = "exa -l";
+            ls = "eza";
+            ll = "eza -l";
+            la = "eza -la";
+            l = "eza -l";
             cat = "bat";
             less = "bat";
             dc = "docker compose";
@@ -154,6 +155,17 @@ programs = {
         ];
     };
 
+    yazi = {
+        enable = true;
+        package = unstable.yazi;
+        enableZshIntegration = true;
+        settings = {
+            manager = {
+                sort_by = "modified";
+                sort_reverse = true;
+            };
+        };
+    };
     gh = {
         enable = true;
         package = pkgs.gitAndTools.gh;
@@ -220,5 +232,5 @@ programs = {
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }

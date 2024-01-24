@@ -14,10 +14,10 @@
             catppuccin
         ];
         extraConfig = ''
-# Change prefix from Ctrl+b to Alt+b
+# Change prefix from Ctrl+b to Alt+d
 unbind C-b
-set-option -g prefix M-b
-bind-key M-b send-prefix
+set-option -g prefix M-Space
+bind-key M-Space send-prefix
 
 bind C-c new-session
 
@@ -37,12 +37,30 @@ bind > swap-pane -D       # swap current pane with the next one
 bind < swap-pane -U       # swap current pane with the previous one
 bind x kill-pane
 
+bind -n C-Left select-pane -L
+bind -n C-Right select-pane -R
+bind -n C-Up select-pane -U
+bind -n C-Down select-pane -D
+
+
 # fzf sessions
 #bind S run-shell -b "~/.tmux/plugins/tmux-fzf/scripts/session.sh attach"
 
 # window navigation
 set -g base-index 1
 set -g pane-base-index 1
+set-option -g renumber-windows on
+
+bind-key -n C-1 select-window -t 1
+bind-key -n C-2 select-window -t 2
+bind-key -n C-3 select-window -t 3
+bind-key -n C-4 select-window -t 4
+bind-key -n C-5 select-window -t 5
+bind-key -n C-6 select-window -t 6
+bind-key -n C-7 select-window -t 7
+bind-key -n C-8 select-window -t 8
+bind-key -n C-9 select-window -t 9
+
 unbind n
 unbind p
 bind -r C-h previous-window # select previous window

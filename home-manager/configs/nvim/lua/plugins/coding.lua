@@ -91,42 +91,6 @@ return {
                         }
                     }
                 end,
-                -- ["rust_analyzer"] = function()
-                --     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-                --         .make_client_capabilities())
-                --     require("lspconfig").rust_analyzer.setup {
-                --         capabilities = capabilities,
-                --         settings = {
-                --             ["rust-analyzer"] = {
-                --                 check = {
-                --                     command = "clippy"
-                --                 },
-                --                 checkOnSave = {
-                --                     command = "clippy"
-                --                 },
-                --                 cargo = {
-                --                     loadOutDirsFromCheck = true
-                --                 },
-                --                 procMacro = {
-                --                     enable = true
-                --                 },
-                --                 diagnostics = {
-                --                     enable = true,
-                --                     enableExperimental = true,
-                --                 },
-                --                 assist = {
-                --                     importGranularity = "module",
-                --                     importPrefix = "by_self",
-                --                 },
-                --                 inlayHints = {
-                --                     chainingHints = true,
-                --                     parameterHints = true,
-                --                     typeHints = true,
-                --                 },
-                --             }
-                --         }
-                --     }
-                -- end
             }
         end
     },

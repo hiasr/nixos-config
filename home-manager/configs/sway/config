@@ -17,6 +17,7 @@ smart_gaps on
 exec_always pkill kanshi; exec kanshi
 exec eww daemon
 exec lxpolkit
+exec udiskie
 
 exec sleep 5 && aw-qt --autostart-modules aw-server
 exec sleep 10 && aw-watcher-window-wayland &
@@ -108,6 +109,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
     # Launch Obsidian
     bindsym $mod+F3 exec flatpak run md.obsidian.Obsidian
+    bindsym $mod+F5 exec flatpak run com.spotify.Client
 
     #Launch Flameshot
     # bindsym $mod+F1 exec QT_QPA_PLATFORM=xcb flameshot gui

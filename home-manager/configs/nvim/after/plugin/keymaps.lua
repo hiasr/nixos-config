@@ -1,7 +1,5 @@
 local keymap = vim.api.nvim_set_keymap
 local default_opts = {noremap = true, silent = true}
-local expr_opts = {noremap = true, expr = true, silent = true}
-
 
 -- Harpoon keybindings
 keymap("n", "<S-h>", "<cmd>lua require('harpoon.ui').nav_prev()<cr>", default_opts)
@@ -17,18 +15,11 @@ keymap("n", "<M-8>", "<cmd>lua require('harpoon.ui').nav_file(8)<cr>", default_o
 keymap("n", "<M-9>", "<cmd>lua require('harpoon.ui').nav_file(9)<cr>", default_opts)
 keymap("n", "<M-0>", "<cmd>lua require('harpoon.ui').nav_file(10)<cr>", default_opts)
 
-
 -- Map leader to space
 vim.g.mapleader = " "
 
 -- Cancel search highlighting with ESC
-keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR>", default_opts)
-
--- Resizing panes
-keymap("n", "<Left>", ":vertical resize +1<CR>", default_opts)
-keymap("n", "<Right>", ":vertical resize -1<CR>", default_opts)
-keymap("n", "<Up>", ":resize -1<CR>", default_opts)
-keymap("n", "<Down>", ":resize +1<CR>", default_opts)
+keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR><ESC>", default_opts)
 
 -- Switch between splits
 require('Navigator').setup()
@@ -38,6 +29,12 @@ keymap("n", "<C-k>", ":NavigatorUp<CR>",default_opts)
 keymap("n", "<C-l>", ":NavigatorRight<CR>",default_opts)
 keymap("n", "<C-x>",":q<CR>",default_opts)
 keymap("n", "<C-w>",":lua require('bufdelete').bufdelete(0, true)<CR>",default_opts)
+
+keymap("n", "<C-Left>", "<cmd>NavigatorLeft<CR>",default_opts)
+keymap("n", "<C-Down>", "<cmd>NavigatorDown<CR>",default_opts)
+keymap("n", "<C-Up>", "<cmd>NavigatorUp<CR>",default_opts)
+keymap("n", "<C-Right>", "<cmd>NavigatorRight<CR>",default_opts)
+keymap("n", "<C-x>","<cmd>q<CR>",default_opts)
 
 -- Toggle Nvim-tree
 vim.keymap.set("n", "<C-n>","<cmd>NvimTreeToggle<cr>", default_opts)
@@ -78,6 +75,7 @@ vim.keymap.set('n', 'gD', '<cmd>Lspsaga peek_definition<cr>', bufopts)
 vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, bufopts)
 vim.keymap.set('n', 'gT', '<cmd>Lspsaga peek_type_definition<cr>', bufopts)
 vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<cr>', bufopts)
+vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, bufopts)
 vim.keymap.set('n', 'gi', builtin.lsp_implementations, bufopts)
 vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
 vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -85,8 +83,8 @@ vim.keymap.set('n', '<space>wl', function()
 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end, bufopts)
 vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-vim.keymap.set('n', '<space>rn', '<cmd>Lspsaga rename<cr>')
-vim.keymap.set('n', '<space>ca','<cmd>Lspsaga code_action<cr>', bufopts)
+vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 vim.keymap.set('n', '<space>cf', function() vim.lsp.buf.format { async = true } end, bufopts)
 vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
 
@@ -103,12 +101,12 @@ vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
 vim.keymap.set('n', 'gs', builtin.lsp_document_symbols, bufopts)
 vim.keymap.set('n', 'gv', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = 'variable'})<cr>", bufopts)
 vim.keymap.set('n', 'gf', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = {'function', 'method'}})<cr>", bufopts)
-vim.keymap.set('n', 'gc', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = {'class', 'struct'}})<cr>", bufopts)
+vim.keymap.set('n', 'go', "<cmd>lua require('telescope.builtin').lsp_document_symbols({symbols = {'class', 'struct'}})<cr>", bufopts)
 
 vim.keymap.set('n', 'gS', builtin.lsp_dynamic_workspace_symbols, bufopts)
 vim.keymap.set('n', 'gV', "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols({symbols = 'variable'})<cr>", bufopts)
 vim.keymap.set('n', 'gF', "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols({symbols = {'function', 'method'}})<cr>", bufopts)
-vim.keymap.set('n', 'gC', "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols({symbols = {'class', 'struct'}})<cr>", bufopts)
+vim.keymap.set('n', 'gO', "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols({symbols = {'class', 'struct'}})<cr>", bufopts)
 
 
 -- Nvim-dap
