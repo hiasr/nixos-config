@@ -9,6 +9,7 @@ wk.register({
         r = { "<cmd>lua require('gitsigns').reset_hunk()<cr>", "Reset hunk" },
         S = { "<cmd>lua require('gitsigns').stage_buffer()<cr>", "Stage buffer" },
         b = { "<cmd>lua require('gitsigns').blame_line{full=true}<cr>", "Blame line" },
+        t = { "<cmd>Gitsigns toggle_signs<cr>", "Toggle signs" },
 
     },
     t = {
@@ -70,7 +71,6 @@ wk.register({
         name = "LSP",
         r = { "<cmd>LspRestart<CR>", "Restart LSP" },
         i = { "<cmd>LspInfo<CR>", "LSP Info" },
-        t = { require('trouble').toggle, "Toggle Trouble" },
     },
     x = {
         name = "Trouble",
@@ -79,6 +79,7 @@ wk.register({
         d = { function() require('trouble').toggle("document_diagnostics") end, "Toggle Document Trouble" },
         l = { function() require('trouble').toggle("loclist") end, "Toggle Loclist Trouble" },
         q = { function() require('trouble').toggle("quickfix") end, "Toggle Quickfix Trouble" },
+        t = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble" },
     },
     C = {
         name = "ChatGPT",

@@ -27,8 +27,6 @@ keymap("n", "<C-h>", ":NavigatorLeft<CR>",default_opts)
 keymap("n", "<C-j>", ":NavigatorDown<CR>",default_opts)
 keymap("n", "<C-k>", ":NavigatorUp<CR>",default_opts)
 keymap("n", "<C-l>", ":NavigatorRight<CR>",default_opts)
-keymap("n", "<C-x>",":q<CR>",default_opts)
-keymap("n", "<C-w>",":lua require('bufdelete').bufdelete(0, true)<CR>",default_opts)
 
 keymap("n", "<C-Left>", "<cmd>NavigatorLeft<CR>",default_opts)
 keymap("n", "<C-Down>", "<cmd>NavigatorDown<CR>",default_opts)

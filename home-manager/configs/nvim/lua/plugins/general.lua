@@ -90,7 +90,15 @@ return {
     {
         "folke/flash.nvim",
         event = "VeryLazy",
-        opts = {},
+        opts = {
+            modes = {
+                char = {
+                    jump_labels = true;
+                    multi_line = false;
+                    autohide = true;
+                }
+            }
+        },
         keys = {
             { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
             {

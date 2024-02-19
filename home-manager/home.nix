@@ -190,6 +190,12 @@ programs = {
                 rebase = "true";
                 ff = "only";
             };
+            column = {
+                ui = "auto";
+            };
+            branch = {
+                sort = "-committerdate";
+            };
             init = {
                 defaultBranch = "main";
             };
@@ -203,6 +209,7 @@ programs = {
 
     neovim = {
         enable = true;
+        package = unstable.neovim-unwrapped;
         defaultEditor = true;
         vimAlias = true;
     };

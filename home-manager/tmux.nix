@@ -37,12 +37,6 @@ bind > swap-pane -D       # swap current pane with the next one
 bind < swap-pane -U       # swap current pane with the previous one
 bind x kill-pane
 
-bind -n C-Left select-pane -L
-bind -n C-Right select-pane -R
-bind -n C-Up select-pane -U
-bind -n C-Down select-pane -D
-
-
 # fzf sessions
 #bind S run-shell -b "~/.tmux/plugins/tmux-fzf/scripts/session.sh attach"
 
