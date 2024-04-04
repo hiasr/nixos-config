@@ -60,7 +60,7 @@ wk.register({
     f = {
         name = "Find",
         f = { builtin.find_files, "Find file" },
-        s = { builtin.live_grep, "Search keyword" },
+        s = { function() require('telescope').extensions.live_grep_args.live_grep_args() end, "Search keyword" },
         S = { builtin.current_buffer_fuzzy_find, "Search keyword in current buffer" },
         g = { builtin.git_files, "Find git file" },
         b = { builtin.buffers, "Find buffers" },

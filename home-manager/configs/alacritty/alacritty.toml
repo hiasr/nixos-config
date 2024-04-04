@@ -1,0 +1,22 @@
+import = ["~/.config/alacritty/catppuccin/catppuccin-mocha.yml"]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 13
+
+[font.normal]
+family = "Iosevka"
+
+[shell]
+args = ["-l", "-c", "tmux attach || tmux new zsh"]
+program = "zsh"
+
+[window]
+decorations = "none"
+opacity = 0.85
+
+[window.padding]
+x = 5
+y = 5

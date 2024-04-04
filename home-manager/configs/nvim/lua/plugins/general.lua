@@ -12,8 +12,24 @@ return {
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzf-native.nvim'
+            'nvim-telescope/telescope-live-grep-args.nvim',
         },
+        config = function()
+            local lga_actions = require('telescope-live-grep-args.actions')
+            require('telescope').load_extension('live_grep_args')
+            require('telescope').setup {
+                extensions = {
+                    live_grep_args = {
+                        mappings = { -- extend mappings
+                            i = {
+                                ["<C-k>"] = lga_actions.quote_prompt(),
+                                ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                            },
+                        },
+                    }
+                }
+            }
+        end
     },
     {
         "j-hui/fidget.nvim",
@@ -93,9 +109,9 @@ return {
         opts = {
             modes = {
                 char = {
-                    jump_labels = true;
-                    multi_line = false;
-                    autohide = true;
+                    jump_labels = true,
+                    multi_line = false,
+                    autohide = true,
                 }
             }
         },
@@ -152,12 +168,16 @@ return {
         event = "VeryLazy",
         config = function()
             require("chatgpt").setup {
-                api_key_cmd = "/home/rubenh/.config/openai/get_key.sh",
+                api_key_cmd = "pwd",
+                api_host_cmd = "echo http://localhost:4000",
+                popup_input = {
+                    submit = "<CR>",
+                },
                 openai_params = {
-                    model = "gpt-4-1106-preview",
+                    model = "claude-haiku",
                 },
                 openai_edit_params = {
-                    model = "gpt-4-1106-preview",
+                    model = "gpt4",
                 }
             }
         end,

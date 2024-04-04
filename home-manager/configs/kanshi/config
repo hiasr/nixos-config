@@ -8,6 +8,10 @@ profile {
     output eDP-1 mode 1920x1080 position 0,0
     output DP-1 mode 3840x2160 position 1920,0 scale 1.35
 }
+profile {
+    output eDP-1 mode 1920x1080 position 0,0
+    output DP-2 mode 3840x2160 position 1920,0 scale 1.35
+}
 
 profile {
     output eDP-1 mode 1920x1080 position 0,0
