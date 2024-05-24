@@ -1,9 +1,12 @@
 return {
     -- UI and UX
-    {
-        'numToStr/Navigator.nvim',
-    },
+    -- {
+    --     -- TODO: Change this back once Zellij PR merged
+    --     -- 'numToStr/Navigator.nvim',
+    --     'dynamotn/Navigator.nvim',
+    -- },
 
+    { 'mrjones2014/smart-splits.nvim' },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
 

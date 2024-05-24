@@ -237,6 +237,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
     for_window [app_id="python3"] floating enable
     for_window [class="Matplotlib"] floating enable
+    for_window [title="Quick Format Citation"] floating enable
 #
 # Scratchpad:
 #

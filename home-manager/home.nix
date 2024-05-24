@@ -113,7 +113,13 @@ programs = {
         dotDir = ".config/zsh";
         enableAutosuggestions = true;
         autocd = true;
-        initExtra = lib.concatStringsSep "\n" ["eval $(opam env)"];
+        initExtra = lib.concatStringsSep "\n" [
+            "eval $(opam env)"
+            # """if [[ -z $ZELLIJ ]]; then
+            #     zellij attach -c
+            #     fi
+            # """
+            ];
         envExtra = lib.concatStringsSep "\n" [
             "SHELL=/usr/bin/zsh"
             ("PATH=" + lib.concatStringsSep ":" [

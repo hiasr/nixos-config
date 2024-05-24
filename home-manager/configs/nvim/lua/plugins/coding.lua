@@ -12,7 +12,7 @@ return {
                     require("null-ls").builtins.formatting.black,
                     require("null-ls").builtins.formatting.ocamlformat,
                     require("null-ls").builtins.formatting.goimports,
-                    require("null-ls").builtins.formatting.buf,
+                    -- require("null-ls").builtins.formatting.buf,
                 },
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then
@@ -71,6 +71,9 @@ return {
             }
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
+                    if server_name == "jdtls" then
+                        return
+                    end
                     if server_name == "rust_analyzer" then
                         return
                     end
@@ -95,10 +98,17 @@ return {
             }
         end
     },
+    {
+        "mfussenegger/nvim-jdtls",
+        dependencies = {
+            "williamboman/mason.nvim",
+        }
+    },
     -- DAP stuff
     {
         'mfussenegger/nvim-dap',
         dependencies = {
+            "nvim-neotest/nvim-nio",
             "rcarriga/nvim-dap-ui",
             "leoluz/nvim-dap-go",
             "theHamsta/nvim-dap-virtual-text",
@@ -127,7 +137,7 @@ return {
     },
     {
         'mrcjkb/rustaceanvim',
-        version = '^3', -- Recommended
+        version = '^4', -- Recommended
         ft = { 'rust' },
     },
     -- Autocomplete stuff
@@ -186,6 +196,7 @@ return {
             "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim",
             "nvim-neotest/neotest-go",
+            "marilari88/neotest-vitest",
         },
         config = function()
             -- get neotest namespace (api call creates or returns namespace)
@@ -203,6 +214,8 @@ return {
                 -- your neotest config here
                 adapters = {
                     require("neotest-go"),
+                    require('rustaceanvim.neotest'),
+                    require("neotest-vitest"),
                 },
             })
         end,
