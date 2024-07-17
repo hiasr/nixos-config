@@ -78,7 +78,7 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./nixos/configuration.nix
-            # ./nixos/secureboot.nix
+            ./nixos/secureboot.nix
           ];
         };
       };
