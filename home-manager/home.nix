@@ -139,7 +139,6 @@ programs = {
         enableAutosuggestions = true;
         autocd = true;
         initExtra = lib.concatStringsSep "\n" [
-            "eval $(opam env)"
             # """if [[ -z $ZELLIJ ]]; then
             #     zellij attach -c
             #     fi
@@ -171,7 +170,7 @@ programs = {
         };
         oh-my-zsh = {
             enable = true;
-            plugins = ["git" "nvm"];
+            plugins = ["git"];
         };
         plugins = [
             {
@@ -197,6 +196,7 @@ programs = {
             };
         };
     };
+
     gh = {
         enable = true;
         package = pkgs.gitAndTools.gh;
