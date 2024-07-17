@@ -19,9 +19,7 @@
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
@@ -36,9 +34,7 @@
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
@@ -53,9 +49,7 @@
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     settings = {
-      # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
-      # Deduplicate and optimize nix store
       auto-optimise-store = true;
     };
   };
@@ -66,7 +60,7 @@
   ];
 
 
-  networking.hostName = "thonk";
+  networking.hostName = "snow";
 
   networking.wireless = {
     enable = true;
@@ -81,62 +75,73 @@
     };
   };
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  # For VM
-  boot.loader.grub.enable = true;
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  # For bare metal 
-  # boot.loader.grub.enable = true;
-  boot.loader.grub.devices = [ "nodev" ];
-  # boot.loader.grub.efiInstallAsRemovable = true;
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.useOSProber = true;
-  # 
-
+  
   programs.zsh.enable = true;
   users.users = {
     rubenh = {
-      # TODO: You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      # initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
       description = "Ruben Hias";
       openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       extraGroups = [ "wheel" "networkmanager" "docker" ];
       shell = pkgs.zsh;
     };
   };
 
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
   services.openssh = {
     enable = true;
-    # Forbid root login through SSH.
     settings = {
     PermitRootLogin = "no";
-    # Use keys only. Remove if you want to SSH using password (not recommended)
     PasswordAuthentication = true;
 };
   };
+
+    # Set your time zone.
+  time.timeZone = "Europe/Brussels";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "nl_BE.UTF-8";
+    LC_IDENTIFICATION = "nl_BE.UTF-8";
+    LC_MEASUREMENT = "nl_BE.UTF-8";
+    LC_MONETARY = "nl_BE.UTF-8";
+    LC_NAME = "nl_BE.UTF-8";
+    LC_NUMERIC = "nl_BE.UTF-8";
+    LC_PAPER = "nl_BE.UTF-8";
+    LC_TELEPHONE = "nl_BE.UTF-8";
+    LC_TIME = "nl_BE.UTF-8";
+  };
+
+  services.printing.enable = true;
 
   # Wayland stuff
   security.polkit.enable = true;
   hardware.opengl.enable = true;
 
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.displayManager.sessionPackages = [pkgs.sway];
-  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
 
-  # Audio
+    # Enable sound with pipewire.
   sound.enable = true;
-  nixpkgs.config.pulseaudio = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

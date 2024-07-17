@@ -34,6 +34,8 @@ in
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
 
+      inputs.fenix.overlays.default
+
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
 
@@ -77,6 +79,29 @@ in
     lazygit
     udiskie
     bitwarden-cli
+    firefox
+    waybar
+    ripgrep
+    kanshi
+    clang
+    llvm
+    nodejs
+    unzip
+    rofi
+
+
+    # coding
+    unstable.alacritty
+    (python3.withPackages (ppkgs: [ppkgs.i3ipc]))
+
+    (fenix.complete.withComponents [
+              "cargo"
+              "clippy"
+              "rust-src"
+              "rustc"
+              "rustfmt"
+            ])
+    rust-analyzer-nightly
 
     # fonts
     nerdfonts
@@ -121,7 +146,6 @@ programs = {
             # """
             ];
         envExtra = lib.concatStringsSep "\n" [
-            "SHELL=/usr/bin/zsh"
             ("PATH=" + lib.concatStringsSep ":" [
                 "${config.home.homeDirectory}/.tfenv/bin:$PATH"
                 "${config.home.homeDirectory}/.local/bin"
@@ -143,6 +167,7 @@ programs = {
             hm = "home-manager --flake .#rubenh@thonk";
             cd = "z";
             tf = "terraform";
+            nd = "nix develop -c zsh";
         };
         oh-my-zsh = {
             enable = true;

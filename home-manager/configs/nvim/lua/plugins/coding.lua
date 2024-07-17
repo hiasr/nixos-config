@@ -65,7 +65,6 @@ return {
                     "lua_ls",
                     "jdtls",
                     "tsserver",
-                    "ocamllsp",
                     "clangd",
                 }
             }

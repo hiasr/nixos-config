@@ -59,6 +59,15 @@
                     }
                 ];
             };
+            snow = {
+                outputs = [
+                    {
+                        criteria = "HDMI-A-2";
+                        mode="3840x2160";
+                        scale = 1.35;
+                    }
+                ];
+            };
         };
     };
 

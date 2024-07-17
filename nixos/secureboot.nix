@@ -1,7 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ...}: {
     imports = [
         inputs.lanzaboote.nixosModules.lanzaboote
-    ]
+    ];
 
     environment.systemPackages = [
         pkgs.sbctl

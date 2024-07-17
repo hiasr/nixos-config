@@ -20,6 +20,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.3.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Home manager
     home-manager = {
         url = "github:nix-community/home-manager/release-23.11";
@@ -64,10 +74,11 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
-        thonk = nixpkgs.lib.nixosSystem {
+        snow = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./nixos/configuration.nix
+            # ./nixos/secureboot.nix
           ];
         };
       };
@@ -83,6 +94,16 @@
           };
           modules = [
             # > Our main home-manager configuration file <
+            ./home-manager/home.nix
+          ];
+        };
+	"rubenh@snow" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { 
+            inherit inputs outputs;
+            # pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux; 
+          };
+          modules = [
             ./home-manager/home.nix
           ];
         };
