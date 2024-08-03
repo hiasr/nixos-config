@@ -6,13 +6,18 @@
     "spacing": 4, // Gaps between modules (4px)
     "margin": 5,
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
-    "modules-center": ["sway/window"],
+    "modules-left": ["hyprland/workspaces", "custom/media"],
+    // "modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
+    // "modules-center": ["sway/window"],
     "modules-right": ["pulseaudio", "battery", "battery#bat2", "clock", "tray"],
     // Modules configuration
      "sway/workspaces": {
          "disable-scroll": true,
          "format": "{index}",
+     },
+     "hyprland/workspaces": {
+         "format": "{id}",
+         "on-click": "activate",
      },
     "keyboard-state": {
         "numlock": true,

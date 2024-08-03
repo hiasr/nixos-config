@@ -4,7 +4,11 @@
       eww = {
         enable = true;
         configDir = ./configs/eww;
-        package = pkgs.eww-wayland;
+      };
+
+      waybar = {
+        enable = true;
+        catppuccin.enable = false;
       };
     };
 

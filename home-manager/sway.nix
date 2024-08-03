@@ -1,25 +1,18 @@
 { pkgs, config, lib, ...} : 
 {
-    programs = {
-      eww = {
-        enable = true;
-        configDir = ./configs/eww;
-        package = pkgs.eww-wayland;
-      };
-    };
-        
-
-
     wayland.windowManager.sway = {
         enable = true;
+        systemd.enable = true;
+        catppuccin.enable = false;
     };
 
 
     services.kanshi = {
         enable = true;
-        profiles = {
-            main_setup = {
-                outputs = [
+        settings = [
+            {
+                profile.name = "main_setup";
+                profile.outputs = [
                     {
                         criteria = "eDP-1";
                         mode = "1920x1080";
@@ -31,9 +24,10 @@
                         position = "1920,0";
                     }
                 ];
-            };
-            main_setup2 = {
-                outputs = [
+            }
+            {
+                profile.name = "main_setup2";
+                profile.outputs = [
                     {
                         criteria = "eDP-1";
                         mode = "1920x1080";
@@ -45,9 +39,10 @@
                         position = "1920,0";
                     }
                 ];
-            };
-            skere_setup = {
-                outputs = [
+            }
+            {
+                profile.name = "skere_setup";
+                profile.outputs = [
                     {
                         criteria = "eDP-1";
                         mode = "1920x1080";
@@ -58,19 +53,19 @@
                         position = "1920,0";
                     }
                 ];
-            };
-            snow = {
-                outputs = [
+            }
+            {
+                profile.name = "snow";
+                profile.outputs = [
                     {
                         criteria = "HDMI-A-2";
                         mode="3840x2160";
                         scale = 1.35;
                     }
                 ];
-            };
-        };
+            }
+        ];
     };
 
     xdg.configFile."sway".source = ./configs/sway;
-    home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
 }

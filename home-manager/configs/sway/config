@@ -14,7 +14,7 @@ gaps outer 5
 smart_gaps on
 
 # Launch kanshi (hotplug)
-exec_always pkill kanshi; exec kanshi
+# exec_always pkill kanshi; exec kanshi
 exec eww daemon
 exec lxpolkit
 exec udiskie

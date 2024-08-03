@@ -20,8 +20,8 @@
 
   nixpkgs = {
     overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
+      # outputs.overlays.additions
+      # outputs.overlays.modifications
       outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
@@ -51,6 +51,12 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+    };
+
+    gc = {
+        automatic = true;
+        dates = "daily";
+        options = "--delete-older-than 7d";
     };
   };
 
@@ -126,8 +132,10 @@
 
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.displayManager.sessionPackages = [pkgs.sway];
+  services.displayManager.sessionPackages = [pkgs.sway pkgs.hyprland];
   services.xserver.displayManager.gdm.enable = true;
+
+  programs.hyprland.enable = true;
 
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;

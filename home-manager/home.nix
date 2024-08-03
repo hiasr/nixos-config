@@ -2,56 +2,30 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
 { inputs, outputs, lib, config, pkgs, ... }: 
-
 let 
     unstable = import inputs.nixpkgs-unstable {
         system = pkgs.system;
         config.allowUnfree = true;
     };
+    catppuccin = inputs.catppuccin;
+    nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
 in
 {
-  # You can import other home-manager modules here
-  imports = [./tmux.nix ./sway.nix];
-  #imports = if pkgs.system == "x86_64-linux" then [ ./sway.nix] else [];
-    #(if pkgs.system == "x86_64-darwin" then [] else []) ; 
-    #[
-    #./tmux.nix
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
+  imports = [./tmux.nix ./wayland.nix ./sway.nix ./hyprland.nix catppuccin.homeManagerModules.catppuccin
+   (builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+      sha256 = "0g5yk54766vrmxz26l3j9qnkjifjis3z2izgpsfnczhw243dmxz9";
+    })];
 
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-  #];
+  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
       inputs.fenix.overlays.default
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
+
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
     };
   };
 
@@ -66,32 +40,22 @@ in
       };
     };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    # unstable.thunderbird-wayland
     tmux
     spotify
     albert
     eza
     discord
-    lazygit
     udiskie
     bitwarden-cli
-    firefox
-    waybar
     ripgrep
     kanshi
     clang
     llvm
     nodejs
     unzip
-    rofi
-
 
     # coding
-    unstable.alacritty
     (python3.withPackages (ppkgs: [ppkgs.i3ipc]))
 
     (fenix.complete.withComponents [
@@ -111,16 +75,45 @@ in
 
   fonts.fontconfig.enable = true;
 
+  catppuccin.enable = true;
 
 
-programs = {
+  programs = {
     home-manager.enable = true;
+
+    alacritty = {
+        enable = true;
+        package = (config.lib.nixGL.wrap pkgs.alacritty);
+        settings = {
+            env = {
+                TERM = "xterm-256color";
+            };
+            font = {
+                size = 13;
+            };
+            font.normal = {
+                family = "Iosevka";
+            };
+            shell = {
+                program = "zsh";
+                args = ["-l" "-c" "tmux attach || tmux new zsh"];
+            };
+            window = {
+                decorations = "none";
+                opacity = 0.85;
+            };
+            window.padding = {
+                x = 5;
+                y = 5;
+            };
+            keyboard = {
+                bindings = (map (n: {key="Key${toString n}"; mods="Control"; chars="\u001b[${toString (48+n)};5u";}) (lib.range 0 9));
+            };
+        };
+    };
 
     bat = {
         enable = true;
-        config = {
-            theme = "base16-256";
-        };
     };
 
     btop = {
@@ -133,10 +126,15 @@ programs = {
         nix-direnv.enable = true;
     };
 
+    firefox = {
+        enable = true;
+        package = (config.lib.nixGL.wrap pkgs.firefox);
+    };
+
     zsh = {
         enable = true;
         dotDir = ".config/zsh";
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         autocd = true;
         initExtra = lib.concatStringsSep "\n" [
             # """if [[ -z $ZELLIJ ]]; then
@@ -187,6 +185,7 @@ programs = {
 
     yazi = {
         enable = true;
+        catppuccin.enable = true;
         package = unstable.yazi;
         enableZshIntegration = true;
         settings = {
@@ -238,11 +237,14 @@ programs = {
         ];
     };
 
+    lazygit.enable = true;
+
     neovim = {
         enable = true;
         package = unstable.neovim-unwrapped;
         defaultEditor = true;
         vimAlias = true;
+        catppuccin.enable = false;
     };
 
     go = {
@@ -250,6 +252,10 @@ programs = {
         package = unstable.go;
     };
 
+    rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
+    };
 
     starship = {
         enable = true;
@@ -259,12 +265,9 @@ programs = {
         enable = true;
         enableZshIntegration = true;
     };
-
   };
 
-
   home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
-  home.file."./.config/alacritty".source = config.lib.file.mkOutOfStoreSymlink ./configs/alacritty;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
