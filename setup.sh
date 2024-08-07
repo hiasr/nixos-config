@@ -2,6 +2,7 @@
 
 # Install Nix
 sh <(curl -L https://nixos.org/nix/install) --daemon
+source /etc/profile
 
 # Install Home Manager
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
