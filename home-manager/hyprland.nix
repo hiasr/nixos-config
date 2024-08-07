@@ -15,6 +15,7 @@
                 "waybar" 
                 "fix_env_hyprland tmux"
                 "hyprpaper"
+                "nm-applet"
             ];
 
             general = {
@@ -39,6 +40,10 @@
                 drop_shadow = true;
                 shadow_range = 30;
                 shadow_render_power = 3;
+            };
+            misc = {
+                disable_splash_rendering = true;
+                disable_hyprland_logo = true;
             };
 
             animations = {
@@ -94,7 +99,7 @@
           [
             ## Launch applications
             "$mod, return, exec, alacritty"
-            "$mod, F1, exec, grim -g $(slurp) - | wl-copy"
+            "$mod, F1, exec, hyprshot -m region --clipboard-only" 
             "$mod, F2, exec, firefox"
 
 
@@ -105,7 +110,7 @@
             "$mod, g, togglegroup,"
             "$mod, bracketleft, changegroupactive, b"
             "$mod, bracketright, changegroupactive, f"
-            "$mod, space, exec, rofi -show drun"
+            "$mod, space, exec, rofi -show drun --show-icons"
             "$mod, p, pin, active"
 
             "$mod, left, movefocus, l"
@@ -166,7 +171,9 @@
         };
     };
 
+
     home.packages = with pkgs; [
+     hyprshot
      (writeShellScriptBin "fix_env_hyprland" ''
  #!/usr/bin/env bash
 set -e

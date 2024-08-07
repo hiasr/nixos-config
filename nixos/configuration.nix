@@ -22,7 +22,6 @@
     overlays = [
       # outputs.overlays.additions
       # outputs.overlays.modifications
-      outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -65,20 +64,14 @@
     home-manager
   ];
 
+  environment.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+  };
 
-  networking.hostName = "snow";
 
-  networking.wireless = {
-    enable = true;
-    networks = {
-        telenet-3705F = {
-            psk = "xAyASeu1cJA5";
-        };
-        telenet-ap-6908159 = {
-            psk = "baYktjvxV7ch";
-        };
-
-    };
+  networking = {
+      hostName = "snow";
+      networkmanager.enable = true;
   };
 
   boot.initrd.kernelModules = [ "amdgpu" ];

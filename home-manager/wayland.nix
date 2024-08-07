@@ -12,5 +12,8 @@
       };
     };
 
-    home.file."./.config/waybar".source = config.lib.file.mkOutOfStoreSymlink ./configs/waybar;
+    # Needed for nm-applet to work
+    home.packages = with pkgs; [networkmanagerapplet gnome.adwaita-icon-theme gnome-icon-theme];
+
+    xdg.configFile."waybar".source = ./configs/waybar;
 }

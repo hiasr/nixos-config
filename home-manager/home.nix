@@ -37,12 +37,15 @@ in
         VISUAL = "nvim";
         BROWSER = "firefox";
         _JAVA_AWT_WM_NONREPARENTING = "1";
+        NIXOS_OZONE_WL = "1";
       };
     };
 
   home.packages = with pkgs; [
     tmux
+    beeper
     spotify
+    google-chrome
     albert
     eza
     discord
@@ -76,6 +79,24 @@ in
   fonts.fontconfig.enable = true;
 
   catppuccin.enable = true;
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
+  gtk = {
+    enable = true;
+    catppuccin.enable = false;
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+  };
 
 
   programs = {
@@ -129,6 +150,18 @@ in
     firefox = {
         enable = true;
         package = (config.lib.nixGL.wrap pkgs.firefox);
+        profiles = {
+            default = {
+                id = 0;
+                name = "Default";
+                settings = {
+                    "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+                };
+                userChrome = ''
+                  #TabsToolbar { visibility: collapse !important; }
+                '';
+            };
+        };
     };
 
     zsh = {
