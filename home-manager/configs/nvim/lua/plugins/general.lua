@@ -6,7 +6,7 @@ return {
     --     'dynamotn/Navigator.nvim',
     -- },
 
-    { 'mrjones2014/smart-splits.nvim' },
+    { 'mrjones2014/smart-splits.nvim', lazy = false },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
 

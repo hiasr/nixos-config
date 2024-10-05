@@ -12,6 +12,7 @@ function M.setup()
       U = { "<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI" },
       b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
       c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+      j = { "<cmd>lua require('dap.ext.vscode').load_launchjs()<cr>", "Load Launch Config" },
       d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
       e = { "<cmd>lua require'dapui'.eval()<cr>", "Evaluate" },
       g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },

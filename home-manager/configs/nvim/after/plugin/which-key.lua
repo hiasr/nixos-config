@@ -1,6 +1,16 @@
 local wk = require("which-key")
 local builtin = require('telescope.builtin')
 
+
+-- Define the toggle diffview function
+local function toggle_diffview()
+    if next(require('diffview.lib').views) == nil then
+        vim.cmd('DiffviewOpen')
+    else
+        vim.cmd('DiffviewClose')
+    end
+end
+
 wk.register({
     g = {
         name = "Git",
@@ -10,6 +20,7 @@ wk.register({
         S = { "<cmd>lua require('gitsigns').stage_buffer()<cr>", "Stage buffer" },
         b = { "<cmd>lua require('gitsigns').blame_line{full=true}<cr>", "Blame line" },
         t = { "<cmd>Gitsigns toggle_signs<cr>", "Toggle signs" },
+        d = { toggle_diffview, "Toggle Diffview" },
 
     },
     t = {
@@ -51,10 +62,12 @@ wk.register({
         t = {
             name = "Test",
             n = { "<cmd>lua require('neotest').run.run()<CR>", "Run nearest" },
+            l = { "<cmd>lua require('neotest').run.run_last()<CR>", "Run last test again" },
             f = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Run file" },
             d = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>", "Debug nearest test" },
             s = { "<cmd>lua require('neotest').run.stop()<CR>", "Stop test" },
             o = { "<cmd>lua require('neotest').output_panel.toggle()<CR>", "Toggle output panel" },
+            t = { "<cmd>lua require('neotest').summary.toggle()<CR>", "Toggle summary" },
         }
     },
     f = {

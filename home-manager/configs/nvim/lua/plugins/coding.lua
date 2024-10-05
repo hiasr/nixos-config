@@ -5,14 +5,23 @@ return {
     },
     {
         'nvimtools/none-ls.nvim',
+        dependencies = {
+            "nvimtools/none-ls-extras.nvim",
+        },
         config = function()
             local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+            local lsp_formatter_filter = function(client)
+                if client.name == "tsserver" then
+                    return false
+                end
+                return true
+            end
             require("null-ls").setup({
                 sources = {
-                    require("null-ls").builtins.formatting.black,
                     require("null-ls").builtins.formatting.ocamlformat,
                     require("null-ls").builtins.formatting.goimports,
-                    -- require("null-ls").builtins.formatting.buf,
+                    require("null-ls").builtins.formatting.prettier,
+                    require("none-ls.formatting.ruff_format")
                 },
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then
@@ -21,7 +30,10 @@ return {
                             group = augroup,
                             buffer = bufnr,
                             callback = function()
-                                vim.lsp.buf.format({ async = false })
+                                vim.lsp.buf.format({ async = false,
+                                filter = lsp_formatter_filter,
+                                bufnr = bufnr
+                            })
                             end,
                         })
                     end
@@ -59,7 +71,10 @@ return {
                     "bashls",
                     "dockerls",
                     "gopls",
-                    "pyright",
+                    "basedpyright",
+                    -- "pyright",
+                    "ruff",
+
                     -- "rust_analyzer",
                     "nil_ls",
                     "lua_ls",
@@ -76,9 +91,29 @@ return {
                     if server_name == "rust_analyzer" then
                         return
                     end
+                    if server_name == "basedpyright" then
+                        return
+                    end
                     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
                         .make_client_capabilities())
                     require("lspconfig")[server_name].setup { capabilities = capabilities }
+                end,
+                ["basedpyright"] = function()
+                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
+                        .make_client_capabilities())
+                    require("lspconfig")["basedpyright"].setup {
+                        capabilities = capabilities,
+                        root_dir = function()
+                            return vim.fn.getcwd()
+                        end,
+                        settings = {
+                            basedpyright = {
+                                analysis = {
+                                    typeCheckingMode = "standard",
+                                }
+                            }
+                        }
+                    }
                 end,
                 ["lua_ls"] = function()
                     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
@@ -196,6 +231,7 @@ return {
             "antoinemadec/FixCursorHold.nvim",
             "nvim-neotest/neotest-go",
             "marilari88/neotest-vitest",
+            "nvim-neotest/neotest-python"
         },
         config = function()
             -- get neotest namespace (api call creates or returns namespace)
@@ -212,6 +248,7 @@ return {
             require("neotest").setup({
                 -- your neotest config here
                 adapters = {
+                    require("neotest-python"),
                     require("neotest-go"),
                     require('rustaceanvim.neotest'),
                     require("neotest-vitest"),
