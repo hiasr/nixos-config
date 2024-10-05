@@ -1,7 +1,15 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
@@ -53,9 +61,9 @@
     };
 
     gc = {
-        automatic = true;
-        dates = "daily";
-        options = "--delete-older-than 7d";
+      automatic = true;
+      dates = "daily";
+      options = "--delete-older-than 7d";
     };
   };
 
@@ -65,28 +73,29 @@
   ];
 
   environment.sessionVariables = {
-        NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
-
   networking = {
-      hostName = "snow";
-      networkmanager.enable = true;
+    hostName = "snow";
+    networkmanager.enable = true;
   };
 
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  
   programs.zsh.enable = true;
   users.users = {
     rubenh = {
       isNormalUser = true;
       description = "Ruben Hias";
-      openssh.authorizedKeys.keys = [
+      openssh.authorizedKeys.keys = [ ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "docker"
       ];
-      extraGroups = [ "wheel" "networkmanager" "docker" ];
       shell = pkgs.zsh;
     };
   };
@@ -94,12 +103,12 @@
   services.openssh = {
     enable = true;
     settings = {
-    PermitRootLogin = "no";
-    PasswordAuthentication = true;
-};
+      PermitRootLogin = "no";
+      PasswordAuthentication = true;
+    };
   };
 
-    # Set your time zone.
+  # Set your time zone.
   time.timeZone = "Europe/Brussels";
 
   # Select internationalisation properties.
@@ -125,7 +134,10 @@
 
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  services.displayManager.sessionPackages = [pkgs.sway pkgs.hyprland];
+  services.displayManager.sessionPackages = [
+    pkgs.sway
+    pkgs.hyprland
+  ];
   services.xserver.displayManager.gdm.enable = true;
 
   programs.hyprland.enable = true;
@@ -133,7 +145,7 @@
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
 
-    # Enable sound with pipewire.
+  # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;

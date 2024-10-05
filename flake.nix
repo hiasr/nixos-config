@@ -18,33 +18,45 @@
     };
 
     home-manager = {
-        url = "github:nix-community/home-manager/release-24.05";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     catppuccin.url = "github:catppuccin/nix";
 
     nixGL = {
-        url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixpkgs-unstable, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nixpkgs-unstable,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         # "aarch64-linux"
         # "i686-linux"
         "x86_64-linux"
-        # "aarch64-darwin"
+        "aarch64-darwin"
         "x86_64-darwin"
       ];
     in
     {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
+
       nixosConfigurations = {
         snow = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = {
+            inherit inputs outputs;
+          };
           modules = [
             ./nixos/configuration.nix
             ./nixos/secureboot.nix
@@ -53,14 +65,19 @@
       };
 
       homeConfigurations = {
-        "rubenh@thonk" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; 
-          extraSpecialArgs = { 
+        "mac" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          extraSpecialArgs = {
             inherit inputs outputs;
           };
-          modules = [
-            ./home-manager/home.nix
-          ];
+          modules = [ ./home-manager/home.nix ];
+        };
+        "rubenh@thonk" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [ ./home-manager/home.nix ];
         };
       };
     };
