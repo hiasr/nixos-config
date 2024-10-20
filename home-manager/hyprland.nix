@@ -17,10 +17,9 @@
       ];
 
       exec-once = [
-        "waybar"
-        "fix_env_hyprland tmux"
-        "hyprpaper"
-        "nm-applet"
+          "waybar" 
+          "fix_env_hyprland tmux"
+          "hyprpaper"
       ];
 
       general = {
@@ -83,10 +82,6 @@
         # orientation = "center";
       };
 
-      gestures = {
-        # See https://wiki.hyprland.org/Configuring/Variables/ for more
-        workspace_swipe = false;
-      };
 
       # Example per-device config
       # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more

@@ -6,7 +6,7 @@
     // "modules-left": ["wlr/workspaces"],
     // "modules-center": ["custom/music"],
      "modules-left": ["hyprland/workspaces"],
-    "modules-right": ["pulseaudio", "battery", "clock", "tray", "custom/power"],
+    "modules-right": ["pulseaudio", "battery", "clock#cal", "clock#time", "tray", "custom/power"],
      "hyprland/workspaces": {
          "format": "{id}",
          "on-click": "activate",
@@ -32,11 +32,15 @@
         "on-click": "playerctl play-pause",
         "max-length": 50
     },
-    "clock": {
+    "clock#time": {
         "timezone": "Europe/Brussels",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "  {:%d/%m/%Y}",
         "format": "  {:%H:%M}"
+    },
+    "clock#cal": {
+        "timezone": "Europe/Brussels",
+        "format": "  {:%d/%m}"
     },
     "battery": {
         "states": {
