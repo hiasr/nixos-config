@@ -49,8 +49,12 @@
   margin: 5px 0;
 }
 
-#clock {
+#clock.time {
   color: @blue;
+}
+
+#clock.cal {
+    color: @green;
 }
 
 #battery {
