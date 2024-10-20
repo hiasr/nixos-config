@@ -28,6 +28,8 @@
       url = "github:nix-community/nixGL/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
@@ -36,17 +38,11 @@
       nixpkgs,
       home-manager,
       nixpkgs-unstable,
+      flake-utils,
       ...
     }@inputs:
     let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [
-        # "aarch64-linux"
-        # "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
@@ -65,19 +61,21 @@
       };
 
       homeConfigurations = {
-        "mac" = home-manager.lib.homeManagerConfiguration {
+        "darwin" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = {
+            isLinux = false;
             inherit inputs outputs;
           };
           modules = [ ./home-manager/home.nix ];
         };
-        "rubenh@thonk" = home-manager.lib.homeManagerConfiguration {
+        "linux" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
+            isLinux = true;
             inherit inputs outputs;
           };
-          modules = [ ./home-manager/home.nix ];
+          modules = [ ./home-manager/home.nix  ./home-manager/linux.nix];
         };
       };
     };

@@ -7,6 +7,7 @@
   lib,
   config,
   pkgs,
+  isLinux,
   ...
 }:
 let
@@ -25,8 +26,7 @@ in
       sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
     })
     ./dev.nix
-  ]; #++ (if pkgs.stdenv.isDarwin then [] else [./linux.nix]);
-
+  ];
   # nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
 
   nixpkgs = {

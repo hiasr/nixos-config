@@ -92,7 +92,12 @@
       isNormalUser = true;
       description = "Ruben Hias";
       openssh.authorizedKeys.keys = [ ];
-      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd"];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "docker"
+        "libvirtd"
+      ];
       shell = pkgs.zsh;
     };
   };
@@ -125,7 +130,7 @@
 
   services.printing = {
     enable = true;
-    drivers = with pkgs; [brlaser];
+    drivers = with pkgs; [ brlaser ];
   };
 
   services.avahi = {
@@ -137,7 +142,11 @@
   # networking
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 8000];
+    allowedTCPPorts = [
+      80
+      443
+      8000
+    ];
   };
 
   # Wayland stuff

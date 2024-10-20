@@ -1,0 +1,103 @@
+keybinds {
+    unbind "Ctrl o"
+    unbind "Ctrl t"
+    shared_except "locked" {
+        bind "Ctrl h" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "left";
+            };
+        }
+
+        bind "Ctrl j" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "down";
+            };
+        }
+
+        bind "Ctrl k" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "up";
+            };
+        }
+
+        bind "Ctrl l" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "move_focus";
+                payload "right";
+            };
+        }
+
+        bind "Alt h" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "resize";
+                payload "left";
+            };
+        }
+
+        bind "Alt j" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "resize";
+                payload "down";
+            };
+        }
+
+        bind "Alt k" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "resize";
+                payload "up";
+            };
+        }
+
+        bind "Alt l" {
+            MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
+                name "resize";
+                payload "right";
+            };
+        }
+
+        bind "Ctrl f" { ToggleFloatingPanes; }
+        bind "Ctrl 1" { GoToTab 1; }
+        bind "Ctrl 2" { GoToTab 2; }
+        bind "Ctrl 3" { GoToTab 3; }
+        bind "Ctrl 4" { GoToTab 4; }
+        bind "Ctrl 5" { GoToTab 5; }
+        bind "Ctrl 6" { GoToTab 6; }
+        bind "Ctrl 7" { GoToTab 7; }
+        bind "Ctrl 8" { GoToTab 8; }
+        bind "Ctrl 9" { GoToTab 9; }
+    }
+
+    shared_except "locked" "search" {
+        bind "Ctrl f" { SwitchToMode "Scroll"; }
+    }
+
+    shared_except "locked" "session" {
+        bind "Ctrl s" { SwitchToMode "Session"; }
+    }
+
+    search {
+        bind "Ctrl f" { SwitchToMode "Normal"; }
+    }
+
+    scroll {
+        bind "Ctrl f" { SwitchToMode "Normal"; }
+    }
+
+    session {
+        bind "Ctrl s" { SwitchToMode "Normal"; }
+    }
+}
+
+theme "catppuccin-mocha"
+mirror_session true
+pane_frames true
+
+ui {
+  pane_frames {
+    hide_session_name true
+    rounded_corners true
+  }
+}

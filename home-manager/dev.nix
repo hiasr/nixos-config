@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  isLinux,
   ...
 }:
 let
@@ -13,17 +14,17 @@ let
   };
 in
 {
-  imports = [
-    ./tmux.nix
-  ];
+  imports = [ ./zellij.nix ];
 
   home.packages = with pkgs; [
     tmux
     eza
     ripgrep
     zellij
+    wget
+    kitty
 
-(fenix.complete.withComponents [
+    (fenix.complete.withComponents [
       "cargo"
       "clippy"
       "rust-src"
@@ -33,16 +34,16 @@ in
     rust-analyzer-nightly
   ];
 
-  home.file."Applications/home-manager".source =
-    let
-      apps = pkgs.buildEnv {
-        name = "home-manager-applications";
-        paths = config.home.packages;
-        pathsToLink = "/Applications";
-      };
-    in
-    lib.mkIf pkgs.stdenv.targetPlatform.isDarwin "${apps}/Applications";
-
+  # home.file."Applications/home-manager".source =
+  #   let
+  #     apps = pkgs.buildEnv {
+  #       name = "home-manager-applications";
+  #       paths = config.home.packages;
+  #       pathsToLink = "/Applications";
+  #     };
+  #   in
+  #   lib.mkIf pkgs.stdenv.targetPlatform.isDarwin { text = "${apps}/Applications"; };
+  #
   programs = {
     home-manager.enable = true;
 
@@ -66,7 +67,8 @@ in
           args = [
             "-l"
             "-c"
-            "tmux attach || tmux new zsh"
+            "zellij"
+            # "tmux attach || tmux new zsh"
           ];
         };
         window = {
@@ -102,28 +104,39 @@ in
       package = unstable.go;
     };
 
-
-
-
     zsh = {
       enable = true;
       dotDir = ".config/zsh";
       autosuggestion.enable = true;
       autocd = true;
       initExtra = lib.concatStringsSep "\n" [
-      """if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        ""
+        "if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-        fi"""
-        # """if [[ -z $ZELLIJ ]]; then
-        #     zellij attach -c
-        #     fi
-        # """
+        fi"
+        ""
+        """
+        zellij_tab_name_update() {
+            if [[ -n $ZELLIJ ]]; then
+                local current_dir=$PWD
+                if [[ $current_dir == $HOME ]]; then
+                current_dir=\"~\"
+            else
+                current_dir=\${current_dir##*/}
+            fi
+                command nohup zellij action rename-tab $current_dir >/dev/null 2>&1
+            fi
+        }
+
+        zellij_tab_name_update
+        chpwd_functions+=(zellij_tab_name_update)
+        """
       ];
       envExtra = lib.concatStringsSep "\n" [
         (
           "PATH="
-          +
-            lib.concatStringsSep ":" ([
+          + lib.concatStringsSep ":" (
+            [
               "${config.home.homeDirectory}/.tfenv/bin"
               "${config.home.homeDirectory}/.local/bin"
               "${config.home.homeDirectory}/.cargo/bin"
@@ -131,10 +144,16 @@ in
               "${config.home.homeDirectory}/.spicetify"
               "$PATH"
             ]
-            ++ (if pkgs.stdenv.targetPlatform.isDarwin then [ 
-                "/opt/homebrew/bin"
-                "${config.home.homeDirectory}/miniconda/bin"
-                ] else [ ]))
+            ++ (
+              if pkgs.stdenv.targetPlatform.isDarwin then
+                [
+                  "/opt/homebrew/bin"
+                  "${config.home.homeDirectory}/miniconda/bin"
+                ]
+              else
+                [ ]
+            )
+          )
         )
       ];
       shellAliases = {
@@ -147,12 +166,11 @@ in
         dc = "docker compose";
         sv = "source venv/bin/activate";
         nr = "sudo nixos-rebuild --flake .#snow";
-        hm = "home-manager --flake .#rubenh@thonk";
         cd = "z";
         tf = "terraform";
         nd = "nix develop -c zsh";
         lg = "lazygit";
-      };
+      } // (if isLinux then { hm = "home-manager --flake .#linux"; } else { hm = "home-manager --flake .#darwin"; });
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];

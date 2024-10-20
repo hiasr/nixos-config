@@ -1,18 +1,22 @@
-{ 
-inputs,
-outputs,
-lib,
-config,
-pkgs,
-...
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 {
-  imports = [ ./wayland.nix ./sway.nix ./hyprland.nix];
+  imports = [
+    ./wayland.nix
+    ./sway.nix
+    ./hyprland.nix
+  ];
 
   home.sessionVariables = {
-      BROWSER = "firefox";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-      NIXOS_OZONE_WL = "1";
+    BROWSER = "firefox";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
   home.packages = with pkgs; [
@@ -31,7 +35,10 @@ pkgs,
     obsidian
 
     # coding
-    (python3.withPackages (ppkgs: [ ppkgs.i3ipc ppkgs.pip ]))
+    (python3.withPackages (ppkgs: [
+      ppkgs.i3ipc
+      ppkgs.pip
+    ]))
   ];
 
   dconf = {
@@ -42,7 +49,6 @@ pkgs,
       };
     };
   };
-
   gtk = {
     enable = true;
     catppuccin.enable = false;
@@ -51,8 +57,9 @@ pkgs,
       name = "Adwaita";
     };
   };
+  programs = {
 
-  firefox = {
+    firefox = {
       enable = true;
       package = (config.lib.nixGL.wrap pkgs.firefox);
       profiles = {
@@ -68,8 +75,10 @@ pkgs,
         };
       };
     };
+
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
     };
+  };
 }

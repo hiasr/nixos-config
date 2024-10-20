@@ -19,6 +19,7 @@
 
   # Needed for nm-applet to work
   home.packages = with pkgs; [
+    wl-clipboard
     networkmanagerapplet
     gnome.adwaita-icon-theme
     gnome-icon-theme

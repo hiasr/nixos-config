@@ -17,9 +17,9 @@
       ];
 
       exec-once = [
-          "waybar" 
-          "fix_env_hyprland tmux"
-          "hyprpaper"
+        "waybar"
+        "fix_env_hyprland tmux"
+        "hyprpaper"
       ];
 
       general = {
@@ -81,7 +81,6 @@
         # soon :)
         # orientation = "center";
       };
-
 
       # Example per-device config
       # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
