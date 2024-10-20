@@ -56,6 +56,8 @@ in
     todoist
   ];
 
+  services.syncthing.enable = true;
+
   fonts.fontconfig.enable = true;
 
   catppuccin.enable = true;

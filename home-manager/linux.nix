@@ -28,9 +28,10 @@ pkgs,
     llvm
     nodejs
     unzip
+    obsidian
 
     # coding
-    (python3.withPackages (ppkgs: [ ppkgs.i3ipc ]))
+    (python3.withPackages (ppkgs: [ ppkgs.i3ipc ppkgs.pip ]))
   ];
 
   dconf = {
