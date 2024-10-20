@@ -70,6 +70,7 @@
   environment.systemPackages = with pkgs; [
     git
     home-manager
+    inotify-tools
   ];
 
   environment.sessionVariables = {
@@ -91,11 +92,7 @@
       isNormalUser = true;
       description = "Ruben Hias";
       openssh.authorizedKeys.keys = [ ];
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "docker"
-      ];
+      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd"];
       shell = pkgs.zsh;
     };
   };
@@ -126,7 +123,22 @@
     LC_TIME = "nl_BE.UTF-8";
   };
 
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [brlaser];
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  # networking
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 8000];
+  };
 
   # Wayland stuff
   security.polkit.enable = true;
@@ -142,8 +154,14 @@
 
   programs.hyprland.enable = true;
 
+  virtualisation.docker.enable = true;
+
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
+
+  services.power-profiles-daemon.enable = false;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -151,9 +169,10 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+    audio.enable = true;
     pulse.enable = true;
+    alsa.enable = true;
+    wireplumber.enable = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
