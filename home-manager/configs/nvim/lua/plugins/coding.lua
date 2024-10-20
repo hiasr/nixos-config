@@ -81,6 +81,7 @@ return {
                     "jdtls",
                     "tsserver",
                     "clangd",
+                    "elixirls",
                 }
             }
             require("mason-lspconfig").setup_handlers {
