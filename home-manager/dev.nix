@@ -21,6 +21,7 @@ in
     tmux
     eza
     ripgrep
+    zellij
 
 (fenix.complete.withComponents [
       "cargo"

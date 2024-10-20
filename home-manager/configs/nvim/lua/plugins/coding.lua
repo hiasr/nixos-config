@@ -21,7 +21,7 @@ return {
                     require("null-ls").builtins.formatting.ocamlformat,
                     require("null-ls").builtins.formatting.goimports,
                     require("null-ls").builtins.formatting.prettier,
-                    require("none-ls.formatting.ruff_format")
+                    require("null-ls").builtins.formatting.black,
                 },
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then
