@@ -14,13 +14,11 @@ let
   };
 in
 {
-  imports = [ ./zellij.nix ];
+  imports = [ ./zellij.nix ./tmux.nix ];
 
   home.packages = with pkgs; [
-    tmux
     eza
     ripgrep
-    zellij
     wget
     kitty
 
@@ -60,7 +58,7 @@ in
           size = 13;
         };
         font.normal = {
-          family = "Iosevka";
+          family = "Iosevka Nerd Font";
         };
         shell = {
           program = "zsh";
@@ -72,8 +70,9 @@ in
           ];
         };
         window = {
-          decorations = "none";
-          opacity = 0.85;
+          decorations = (if isLinux then "None" else "Buttonless");
+          opacity = 0.95;
+          option_as_alt = "Both";
         };
         window.padding = {
           x = 5;
@@ -84,7 +83,7 @@ in
             map (n: {
               key = "Key${toString n}";
               mods = "Control";
-              chars = "\u001b[${toString (48 + n)};5u";
+              chars = "\\u001b[${toString (48 + n)};5u";
             }) (lib.range 0 9)
           );
         };

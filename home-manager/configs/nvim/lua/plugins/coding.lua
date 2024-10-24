@@ -73,8 +73,6 @@ return {
                     "gopls",
                     "basedpyright",
                     -- "pyright",
-                    "ruff",
-
                     -- "rust_analyzer",
                     "nil_ls",
                     "lua_ls",
