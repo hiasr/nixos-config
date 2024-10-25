@@ -230,7 +230,8 @@ return {
             "antoinemadec/FixCursorHold.nvim",
             "nvim-neotest/neotest-go",
             "marilari88/neotest-vitest",
-            "nvim-neotest/neotest-python"
+            "nvim-neotest/neotest-python",
+            "jfpedroza/neotest-elixir",
         },
         config = function()
             -- get neotest namespace (api call creates or returns namespace)
@@ -251,6 +252,7 @@ return {
                     require("neotest-go"),
                     require('rustaceanvim.neotest'),
                     require("neotest-vitest"),
+                    require("neotest-elixir"),
                 },
             })
         end,
