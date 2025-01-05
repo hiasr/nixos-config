@@ -28,7 +28,6 @@ in
     k9s
     kubectx
     visidata
-    unstable.ghostty
 
     (fenix.complete.withComponents [
       "cargo"

@@ -36,6 +36,7 @@
     vlc
     stremio
     pavucontrol
+    unstable.ghostty
 
     # coding
     (python3.withPackages (ppkgs: [
