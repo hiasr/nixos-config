@@ -21,6 +21,10 @@ in
     ripgrep
     wget
     kitty
+    kubectl
+    k9s
+    kubectx
+    visidata
 
     (fenix.complete.withComponents [
       "cargo"
@@ -163,7 +167,7 @@ in
         cat = "bat";
         less = "bat";
         dc = "docker compose";
-        sv = "source venv/bin/activate";
+        sv = "source .venv/bin/activate";
         nr = "sudo nixos-rebuild --flake .#snow";
         cd = "z";
         tf = "terraform";
@@ -208,6 +212,7 @@ in
       userName = "Ruben Hias";
       userEmail = "ruben.hias@techwolf.ai";
 
+      lfs.enable = true;
       extraConfig = {
         core = {
           editor = "nvim";

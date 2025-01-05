@@ -203,6 +203,8 @@ keybinds clear-defaults=true {
         bind "Alt l" { Resize "Right"; }
 
         bind "Alt t" { NewTab; }
+        bind "Super a" { NewTab; }
+        bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "Alt s" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
@@ -277,7 +279,7 @@ plugins {
 
 theme "catppuccin-mocha"
 mirror_session true
-pane_frames true
+pane_frames false
 
 ui {
   pane_frames {
