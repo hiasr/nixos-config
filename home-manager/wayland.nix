@@ -13,7 +13,6 @@
 
     waybar = {
       enable = true;
-      catppuccin.enable = false;
     };
   };
 

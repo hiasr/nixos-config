@@ -9,7 +9,7 @@ size = 13
 [font.normal]
 family = "Iosevka"
 
-[shell]
+[terminal.shell]
 args = ["-l", "-c", "zellij"]
 program = "zsh"
 

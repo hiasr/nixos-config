@@ -15,16 +15,14 @@ let
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  catppuccin = inputs.catppuccin;
   nixGLIntel = inputs.nixGL.packages.${pkgs.system}.nixGLIntel;
 in
 {
   imports = [
-    catppuccin.homeManagerModules.catppuccin
-    (builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-      sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
-    })
+    # (builtins.fetchurl {
+    #   url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+    #   sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
+    # })
     ./dev.nix
   ];
   # nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";

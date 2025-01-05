@@ -173,16 +173,63 @@
   services.power-profiles-daemon.enable = false;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    audio.enable = true;
     pulse.enable = true;
+    audio.enable = true;
     alsa.enable = true;
+    alsa.support32Bit = true;
     wireplumber.enable = true;
   };
+
+services.pipewire.extraConfig.pipewire."92-low-latency" = {
+    "context.properties" = {
+      "default.clock.rate" = 48000;
+      "default.clock.quantum" = 1024;
+      "default.clock.min-quantum" = 1024;
+      "default.clock.max-quantum" = 1024;
+    };
+  };
+services.pipewire.extraConfig.pipewire-pulse."92-low-latency" = {
+  context.modules = [
+    {
+      name = "libpipewire-module-protocol-pulse";
+      args = {
+        pulse.min.req = "1024/48000";
+        pulse.default.req = "1024/48000";
+        pulse.max.req = "1024/48000";
+        pulse.min.quantum = "1024/48000";
+        pulse.max.quantum = "1024/48000";
+      };
+    }
+  ];
+  stream.properties = {
+    node.latency = "1024/48000";
+    resample.quality = 1;
+  };
+};
+
+services.pipewire.extraConfig.pipewire."50-alsa-config.conf" = {
+  "monitor.alsa.rules" = [
+  {
+    matches = [
+      # This matches the value of the 'node.name' property of the node.
+      {
+        node.name = "~alsa_output.*";
+      }
+    ];
+    actions = {
+      # Apply all the desired node specific settings here.
+      update-props = {
+        api.alsa.period-size   = 1024;
+        api.alsa.headroom      = 8192;
+      };
+    };
+  }
+];
+};
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

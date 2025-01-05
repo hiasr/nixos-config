@@ -60,7 +60,7 @@ in
         font.normal = {
           family = "Iosevka Nerd Font";
         };
-        shell = {
+        terminal.shell = {
           program = "zsh";
           args = [
             "-l"
@@ -188,7 +188,6 @@ in
     };
     yazi = {
       enable = true;
-      catppuccin.enable = true;
       package = unstable.yazi;
       enableZshIntegration = true;
       settings = {
@@ -248,7 +247,6 @@ in
       package = unstable.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
-      catppuccin.enable = false;
     };
     starship = {
       enable = true;
@@ -259,5 +257,6 @@ in
       enableZshIntegration = true;
     };
   };
+  xdg.configFile."nvim/init.lua".enable = false; # Disable default config
   home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
 }

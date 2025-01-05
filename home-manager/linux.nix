@@ -34,6 +34,8 @@
     unzip
     obsidian
     vlc
+    stremio
+    pavucontrol
 
     # coding
     (python3.withPackages (ppkgs: [
@@ -52,7 +54,6 @@
   };
   gtk = {
     enable = true;
-    catppuccin.enable = false;
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;
       name = "Adwaita";

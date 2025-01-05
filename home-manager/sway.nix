@@ -8,7 +8,6 @@
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
-    catppuccin.enable = false;
   };
 
   services.kanshi = {
