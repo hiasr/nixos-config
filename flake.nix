@@ -67,7 +67,10 @@
             isLinux = false;
             inherit inputs outputs;
           };
-          modules = [ ./home-manager/home.nix ];
+          modules = [
+            ./home-manager/home.nix
+            inputs.catppuccin.homeManagerModules.catppuccin
+          ];
         };
         "linux" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -75,7 +78,11 @@
             isLinux = true;
             inherit inputs outputs;
           };
-          modules = [ ./home-manager/home.nix  ./home-manager/linux.nix inputs.catppuccin.homeManagerModules.catppuccin ];
+          modules = [
+            ./home-manager/home.nix
+            ./home-manager/linux.nix
+            inputs.catppuccin.homeManagerModules.catppuccin
+          ];
         };
       };
     };

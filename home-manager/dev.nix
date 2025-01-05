@@ -14,7 +14,10 @@ let
   };
 in
 {
-  imports = [ ./zellij.nix ./tmux.nix ];
+  imports = [
+    ./zellij.nix
+    ./tmux.nix
+  ];
 
   home.packages = with pkgs; [
     eza
@@ -120,7 +123,8 @@ in
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
         fi"
         ""
-        """
+        ""
+        "
         zellij_tab_name_update() {
             if [[ -n $ZELLIJ ]]; then
                 local current_dir=$PWD
@@ -135,7 +139,8 @@ in
 
         zellij_tab_name_update
         chpwd_functions+=(zellij_tab_name_update)
-        """
+        "
+        ""
       ];
       envExtra = lib.concatStringsSep "\n" [
         (
@@ -161,21 +166,28 @@ in
           )
         )
       ];
-      shellAliases = {
-        ls = "eza";
-        ll = "eza -l";
-        la = "eza -la";
-        l = "eza -l";
-        cat = "bat";
-        less = "bat";
-        dc = "docker compose";
-        sv = "source .venv/bin/activate";
-        nr = "sudo nixos-rebuild --flake .#snow";
-        cd = "z";
-        tf = "terraform";
-        nd = "nix develop -c zsh";
-        lg = "lazygit";
-      } // (if isLinux then { hm = "home-manager --flake .#linux"; } else { hm = "home-manager --flake .#darwin"; });
+      shellAliases =
+        {
+          ls = "eza";
+          ll = "eza -l";
+          la = "eza -la";
+          l = "eza -l";
+          cat = "bat";
+          less = "bat";
+          dc = "docker compose";
+          sv = "source .venv/bin/activate";
+          nr = "sudo nixos-rebuild --flake .#snow";
+          cd = "z";
+          tf = "terraform";
+          nd = "nix develop -c zsh";
+          lg = "lazygit";
+        }
+        // (
+          if isLinux then
+            { hm = "home-manager --flake .#linux"; }
+          else
+            { hm = "home-manager --flake .#darwin"; }
+        );
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
@@ -265,5 +277,6 @@ in
     };
   };
   xdg.configFile."nvim/init.lua".enable = false; # Disable default config
-  home.file."./.config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
+  home.file."./.config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
 }
