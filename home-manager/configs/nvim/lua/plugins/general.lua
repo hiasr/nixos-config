@@ -1,8 +1,8 @@
 return {
     -- UI and UX
     {
-    --     -- TODO: Change this back once Zellij PR merged
-    --     -- 'numToStr/Navigator.nvim',
+        --     -- TODO: Change this back once Zellij PR merged
+        --     -- 'numToStr/Navigator.nvim',
         'hiasr/Navigator.nvim',
         config = function()
             require('Navigator').setup()
@@ -11,7 +11,10 @@ return {
     -- { 'mrjones2014/smart-splits.nvim', lazy = false },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
-
+    {
+        'nmac427/guess-indent.nvim',
+        config = function() require('guess-indent').setup {} end,
+    },
     -- Additional applications
     {
         'nvim-telescope/telescope.nvim',
@@ -63,16 +66,6 @@ return {
         end
     },
     {
-        'NeogitOrg/neogit',                  -- Magit for Neovim
-        dependencies = {
-            "nvim-lua/plenary.nvim",         -- required
-            "nvim-telescope/telescope.nvim", -- optional
-            "sindrets/diffview.nvim",        -- optional
-        },
-        config = true
-    },
-
-    {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'kyazdani42/nvim-web-devicons' }
     },
@@ -83,31 +76,6 @@ return {
             require("alpha").setup(require("alpha.themes.dashboard").opts)
         end,
     },
-    {
-        "epwalsh/obsidian.nvim",
-        lazy = true,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "hrsh7th/nvim-cmp",
-            "nvim-telescope/telescope.nvim",
-        },
-        opts = {
-            dir = "~/Obsidian",
-            completion = {
-                nvim_cmp = true,
-            }
-        }
-    },
-    -- {
-    --     "ggandor/leap.nvim",
-    --     config = function()
-    --         require('leap').add_default_mappings()
-    --     end,
-    --     dependencies = {
-    --         "tpope/vim-repeat",
-    --     }
-    -- },
-
     {
         "folke/flash.nvim",
         event = "VeryLazy",
@@ -154,8 +122,7 @@ return {
     },
 
     -- Misc
-    'tpope/vim-obsession',
-    'github/copilot.vim',
+    -- 'github/copilot.vim',
     {
         "folke/which-key.nvim",
         config = function()
@@ -168,29 +135,4 @@ return {
             require('neoscroll').setup {}
         end
     },
-    {
-        "jackMort/ChatGPT.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("chatgpt").setup {
-                api_key_cmd = "pwd",
-                api_host_cmd = "echo http://localhost:4000",
-                popup_input = {
-                    submit = "<CR>",
-                },
-                openai_params = {
-                    model = "claude-haiku",
-                },
-                openai_edit_params = {
-                    model = "gpt4",
-                }
-            }
-        end,
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim"
-        }
-    }
-
 }

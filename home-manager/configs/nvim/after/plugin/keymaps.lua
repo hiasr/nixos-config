@@ -14,9 +14,29 @@ keymap("n", "<M-7>", "<cmd>lua require('harpoon.ui').nav_file(7)<cr>", default_o
 keymap("n", "<M-8>", "<cmd>lua require('harpoon.ui').nav_file(8)<cr>", default_opts)
 keymap("n", "<M-9>", "<cmd>lua require('harpoon.ui').nav_file(9)<cr>", default_opts)
 keymap("n", "<M-0>", "<cmd>lua require('harpoon.ui').nav_file(10)<cr>", default_opts)
+keymap("n", "<C-S-!>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", default_opts)
+keymap("n", "<C-S-@>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", default_opts)
+keymap("n", "<C-S-#>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", default_opts)
+keymap("n", "<C-S-$>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", default_opts)
+keymap("n", "<C-S-%>", "<cmd>lua require('harpoon.ui').nav_file(5)<cr>", default_opts)
 
+keymap("n", "<C-S-n>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", default_opts)
+keymap("n", "<C-S-e>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", default_opts)
+keymap("n", "<C-S-i>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", default_opts)
+keymap("n", "<C-S-o>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>", default_opts)
 -- Map leader to space
 vim.g.mapleader = " "
+
+
+-- Codecompanion
+vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+-- Expand 'cc' into 'CodeCompanion' in the command line
+vim.cmd([[cab cc CodeCompanion]])
 
 -- Cancel search highlighting with ESC
 keymap("n", "<ESC>", ":nohlsearch<Bar>:echo<CR><ESC>", default_opts)

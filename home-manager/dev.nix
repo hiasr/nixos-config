@@ -14,15 +14,17 @@ let
   };
 in
 {
-  imports = [ ./zellij.nix ];
+  imports = [ ./zellij.nix ./tmux.nix ];
 
   home.packages = with pkgs; [
-    tmux
     eza
     ripgrep
-    zellij
     wget
     kitty
+    kubectl
+    k9s
+    kubectx
+    visidata
 
     (fenix.complete.withComponents [
       "cargo"
@@ -60,7 +62,7 @@ in
           size = 13;
         };
         font.normal = {
-          family = "Iosevka";
+          family = "Iosevka Nerd Font";
         };
         shell = {
           program = "zsh";
@@ -72,20 +74,26 @@ in
           ];
         };
         window = {
-          decorations = "none";
-          opacity = 0.85;
+          decorations = (if isLinux then "None" else "Buttonless");
+          opacity = 0.95;
+          option_as_alt = "Both";
         };
         window.padding = {
           x = 5;
           y = 5;
         };
         keyboard = {
-          bindings = (
-            map (n: {
-              key = "Key${toString n}";
-              mods = "Control";
-              chars = "\u001b[${toString (48 + n)};5u";
-            }) (lib.range 0 9)
+          bindings = ([] 
+            # map (n: {
+            #   key = "Key${toString n}";
+            #   mods = "Control";
+            #   chars = "\\u001b[${toString (48 + n)};5u";
+            # }) (lib.range 0 9) 
+            # ++ map (n: {
+            #   key = "Key${toString n}";
+            #   mods = "Control|Shift";
+            #   chars = "\\u001b[${toString (48 + n)};5u";
+            # }) (lib.range 0 2)
           );
         };
       };
@@ -164,7 +172,7 @@ in
         cat = "bat";
         less = "bat";
         dc = "docker compose";
-        sv = "source venv/bin/activate";
+        sv = "source .venv/bin/activate";
         nr = "sudo nixos-rebuild --flake .#snow";
         cd = "z";
         tf = "terraform";
@@ -210,6 +218,7 @@ in
       userName = "Ruben Hias";
       userEmail = "ruben.hias@techwolf.ai";
 
+      lfs.enable = true;
       extraConfig = {
         core = {
           editor = "nvim";

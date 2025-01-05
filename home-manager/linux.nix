@@ -33,6 +33,7 @@
     nodejs
     unzip
     obsidian
+    vlc
 
     # coding
     (python3.withPackages (ppkgs: [
