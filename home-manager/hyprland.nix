@@ -41,9 +41,9 @@
       decoration = {
         rounding = 5;
 
-        drop_shadow = true;
-        shadow_range = 30;
-        shadow_render_power = 3;
+        # drop_shadow = true;
+        # shadow_range = 30;
+        # shadow_render_power = 3;
       };
       misc = {
         disable_splash_rendering = true;

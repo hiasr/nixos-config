@@ -26,7 +26,7 @@ end
 function M.setup()
   configure_exts() -- Extensions
   configure_debuggers() -- Debugger
-  require("dap-config.keymaps").setup() -- Keymaps
+  -- require("dap-config.keymaps").setup() -- Keymaps
 end
 
 configure_debuggers()

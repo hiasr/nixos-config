@@ -164,7 +164,7 @@ return {
                     "nil_ls",
                     "lua_ls",
                     "jdtls",
-                    "tsserver",
+                    "ts_ls",
                     "clangd",
                     "elixirls",
                     "ruff"
