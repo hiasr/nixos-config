@@ -25,6 +25,7 @@ in
     k9s
     kubectx
     visidata
+    unstable.ghostty
 
     (fenix.complete.withComponents [
       "cargo"
@@ -35,6 +36,7 @@ in
     ])
     rust-analyzer-nightly
   ];
+  xdg.configFile."ghostty".source = ./configs/ghostty;
 
   # home.file."Applications/home-manager".source =
   #   let
