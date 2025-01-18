@@ -29,16 +29,7 @@ in
     kubectx
     visidata
     pipx
-
-    (fenix.stable.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
-    ])
-    rust-analyzer
-    
+    rustup
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
