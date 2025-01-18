@@ -28,15 +28,17 @@ in
     k9s
     kubectx
     visidata
+    pipx
 
-    (fenix.complete.withComponents [
+    (fenix.stable.withComponents [
       "cargo"
       "clippy"
       "rust-src"
       "rustc"
       "rustfmt"
     ])
-    rust-analyzer-nightly
+    rust-analyzer
+    
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
@@ -258,7 +260,14 @@ in
       ];
     };
 
-    lazygit.enable = true;
+    lazygit = {
+      enable = true;
+      settings = {
+        gui = {
+          language = "en";
+        };
+      };
+    };
 
     neovim = {
       enable = true;
@@ -268,6 +277,11 @@ in
     };
     starship = {
       enable = true;
+      settings = {
+        gcloud = {
+          disabled = true;
+        };
+      };
     };
 
     zoxide = {

@@ -31,7 +31,7 @@ function M.setup()
     { "<leader>e", "<cmd>lua require'dapui'.eval()<cr>", desc = "Evaluate", mode = "v", nowait = false, remap = false },
   }
 
-  whichkey.register(keymap, {
+  whichkey.add(keymap, {
     mode = "n",
     prefix = "<leader>",
     buffer = nil,

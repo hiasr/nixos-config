@@ -204,6 +204,12 @@ keybinds clear-defaults=true {
 
         bind "Alt t" { NewTab; }
         bind "Super a" { NewTab; }
+        bind "Super n" { NewTab; }
+        bind "Ctrl a" {
+          Run "zellij" "run" "--floating" "--close-on-exit" "--" "tenere" {
+            close_on_exit true
+          }
+        }
         bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "Alt s" {
             LaunchOrFocusPlugin "session-manager" {

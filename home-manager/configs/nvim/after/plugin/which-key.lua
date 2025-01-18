@@ -57,6 +57,7 @@ wk.add(
     { "<leader>lr", "<cmd>LspRestart<CR>", desc = "Restart LSP" },
     { "<leader>t", group = "Terminal" },
     { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Toggle Floating Terminal" },
+    { "<leader>tc", function() require('toggleterm_config').tenere_toggle() end, desc = "Toggle Tenere" },
     { "<leader>tg", function() require('toggleterm_config').lazygit_toggle() end, desc = "Toggle Lazygit" },
     { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     { "<leader>w", group = "Window" },

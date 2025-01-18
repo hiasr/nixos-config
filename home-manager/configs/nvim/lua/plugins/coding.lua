@@ -10,7 +10,6 @@ return {
     --         "nvim-treesitter/nvim-treesitter",
     --         "hrsh7th/nvim-cmp",                                                                    -- Optional: For using slash commands and variables in the chat buffer
     --         "nvim-telescope/telescope.nvim",                                                       -- Optional: For using slash commands
-    --         "zbirenbaum/copilot.lua",
     --         { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } }, -- Optional: For prettier markdown rendering
     --         { "stevearc/dressing.nvim",                    opts = {} },                            -- Optional: Improves `vim.ui.select`
     --     },
@@ -22,22 +21,11 @@ return {
     --         },
     --         strategies = {
     --             chat = {
-    --                 adapter = "copilot",
+    --                 adapter = "",
     --             },
     --             inline = {
-    --                 adapter = "copilot",
+    --                 adapter = "",
     --             },
-    --         },
-    --         adapters = {
-    --             copilot = function()
-    --                 return require("codecompanion.adapters").extend("copilot", {
-    --                     schema = {
-    --                         model = {
-    --                             default = "claude-3.5-sonnet"
-    --                         },
-    --                     }
-    --                 })
-    --             end,
     --         },
     --     },
     --     config = true
@@ -50,9 +38,6 @@ return {
     --     opts = {
     --         provider = "copilot",
     --         auto_suggestions_provider = "copilot",
-    --         copilot = {
-    --             model = "claude-3.5-sonnet",
-    --         },
     --         hints = {
     --             enabled = false
     --         }
@@ -91,9 +76,6 @@ return {
     -- },
     {
         'nvimtools/none-ls.nvim',
-        dependencies = {
-            "nvimtools/none-ls-extras.nvim",
-        },
         config = function()
             local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             local lsp_formatter_filter = function(client)
@@ -107,7 +89,6 @@ return {
                     require("null-ls").builtins.formatting.ocamlformat,
                     require("null-ls").builtins.formatting.goimports,
                     require("null-ls").builtins.formatting.prettier,
-                    require("null-ls").builtins.formatting.black,
                 },
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then
@@ -275,7 +256,7 @@ return {
     },
     {
         'mrcjkb/rustaceanvim',
-        version = '^4', -- Recommended
+        version = '^5', -- Recommended
         ft = { 'rust' },
     },
     -- Autocomplete stuff

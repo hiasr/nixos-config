@@ -1,2 +1,3 @@
 theme = catppuccin-mocha
 window-decoration = false
+command = zsh -l -c zellij
