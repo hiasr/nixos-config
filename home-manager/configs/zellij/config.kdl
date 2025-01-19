@@ -197,6 +197,12 @@ keybinds clear-defaults=true {
             };
         }
         */
+
+        bind "Ctrl Shift h" { Resize "Left"; }
+        bind "Ctrl Shift j" { Resize "Down"; }
+        bind "Ctrl Shift k" { Resize "Up"; }
+        bind "Ctrl Shift l" { Resize "Right"; }
+
         bind "Alt h" { Resize "Left"; }
         bind "Alt j" { Resize "Down"; }
         bind "Alt k" { Resize "Up"; }
