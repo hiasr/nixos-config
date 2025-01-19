@@ -28,8 +28,6 @@ in
   # nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
 
   nixpkgs = {
-    overlays = [ inputs.fenix.overlays.default ];
-
     config = {
       allowUnfree = true;
     };
