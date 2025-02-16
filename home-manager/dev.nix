@@ -105,7 +105,7 @@ in
       settings = {
         user = {
           name = "Ruben Hias";
-          email = "ruben.hias@gmail.com";
+          email = "ruben.hias@techwolf.ai";
         };
         ui = {
           default-command = "log";
