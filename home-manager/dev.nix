@@ -105,11 +105,21 @@ in
       settings = {
         user = {
           name = "Ruben Hias";
-          email = "ruben.hias@techwolf.com";
+          email = "ruben.hias@gmail.com";
         };
         ui = {
           default-command = "log";
           paginate = "never";
+          diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
+          merge-editor = "vimdiff";
+        };
+        "merge-tools.diffconflicts" = {
+          program = "nvim";
+          merge-args = [
+              "-c" "let g:jj_diffconflicts_marker_length=$marker_length"
+              "-c" "JJDiffConflicts!" "$output" "$base" "$left" "$right"
+          ];
+          merge-tool-edits-conflict-markers = true;
         };
       };
     };

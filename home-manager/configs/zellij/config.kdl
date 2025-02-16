@@ -2,7 +2,7 @@
 keybinds clear-defaults=true {
     unbind "Ctrl t"
     locked {
-    //    bind "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Ctrl g" { SwitchToMode "Normal"; }
     }
     resize {
      //   bind "Ctrl n" { SwitchToMode "Normal"; }
@@ -232,7 +232,7 @@ keybinds clear-defaults=true {
         bind "Ctrl 8" { GoToTab 8; }
         bind "Ctrl 9" { GoToTab 9; }
 
-        // bind "Ctrl g" { SwitchToMode "Locked"; }
+        bind "Ctrl g" { SwitchToMode "Locked"; }
         // bind "Ctrl q" { Quit; }
         bind "Alt n" { NewPane; }
         //bind "Alt i" { MoveTab "Left"; }
