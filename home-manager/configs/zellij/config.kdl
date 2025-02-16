@@ -208,6 +208,8 @@ keybinds clear-defaults=true {
         bind "Alt k" { Resize "Up"; }
         bind "Alt l" { Resize "Right"; }
 
+        bind "Ctrl Enter" { WriteChars "\n"; }
+
         bind "Alt t" { NewTab; }
         bind "Super a" { NewTab; }
         bind "Super n" { NewTab; }

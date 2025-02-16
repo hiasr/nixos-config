@@ -13,7 +13,6 @@ in
 {
   programs.zellij = {
     enable = true;
-    package = unstable.zellij;
   };
   xdg.configFile."zellij".source = ./configs/zellij;
 }

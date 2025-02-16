@@ -8,6 +8,15 @@ return {
             require('Navigator').setup()
         end
     },
+    {
+        "folke/zen-mode.nvim",
+    },
+    {
+        "andrewferrier/wrapping.nvim",
+        config = function()
+            require("wrapping").setup()
+        end
+    },
     -- { 'mrjones2014/smart-splits.nvim', lazy = false },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
@@ -28,11 +37,11 @@ return {
             require('telescope').load_extension('live_grep_args')
             require('telescope').setup {
                 defaults = {
-                        mappings = {
-                              i = { ["<c-t>"] = open_with_trouble },
-                              n = { ["<c-t>"] = open_with_trouble },
-                        },
+                    mappings = {
+                        i = { ["<c-t>"] = open_with_trouble },
+                        n = { ["<c-t>"] = open_with_trouble },
                     },
+                },
                 extensions = {
                     live_grep_args = {
                         mappings = { -- extend mappings
@@ -49,6 +58,45 @@ return {
     {
         "j-hui/fidget.nvim",
         opts = {}
+    },
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*", -- use latest release instead of latest commit
+        lazy = true,
+        -- ft = "markdown",
+        -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+        event = {
+            -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+            -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+            -- refer to `:h file-pattern` for more examples
+            "BufReadPre " .. vim.fn.expand "~" .. "/obsidian/*.md",
+            "BufReadPre " .. vim.fn.expand "~" .. "/Obsidian/*.md",
+        },
+        dependencies = {
+            -- Required.
+            "nvim-lua/plenary.nvim",
+
+            -- see below for full list of optional dependencies 👇
+        },
+        opts = {
+            workspaces = {
+                {
+                    name = "personal",
+                    path = "~/obsidian",
+
+                },
+            },
+            notes_dir = "00 - Own Notes",
+            note_id_func = function(title)
+                return title
+            end,
+            daily_notes = {
+                folder = "01 - Dailies"
+            },
+            ui = {
+                bullets = { char = "-", hl_group = "ObsidianBullet" },
+            }
+        },
     },
     {
         "folke/todo-comments.nvim",
@@ -85,7 +133,7 @@ return {
     },
     {
         "folke/flash.nvim",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         opts = {
             modes = {
                 char = {

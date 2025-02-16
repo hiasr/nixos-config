@@ -30,6 +30,7 @@ in
     visidata
     pipx
     rustup
+    pandoc
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
@@ -63,12 +64,12 @@ in
         };
         terminal.shell = {
           program = "zsh";
-          args = [
-            "-l"
-            "-c"
-            "zellij"
-            # "tmux attach || tmux new zsh"
-          ];
+          # args = [
+          #   "-l"
+          #   "-c"
+          #   "zellij"
+          #   # "tmux attach || tmux new zsh"
+          # ];
         };
         window = {
           decorations = (if isLinux then "None" else "Buttonless");
@@ -173,6 +174,9 @@ in
           tf = "terraform";
           nd = "nix develop -c zsh";
           lg = "lazygit";
+          dcud = "docker compose up -d --build";
+          dclf = "docker compose logs -f";
+          dcl = "docker compose logs";
         }
         // (
           if isLinux then
