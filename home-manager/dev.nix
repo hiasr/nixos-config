@@ -100,6 +100,20 @@ in
       nix-direnv.enable = true;
     };
 
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Ruben Hias";
+          email = "ruben.hias@gmail.com";
+        };
+        ui = {
+          default-command = "log";
+          paginate = "never";
+        };
+      };
+    };
+
     go = {
       enable = true;
       package = unstable.go;
@@ -142,6 +156,7 @@ in
             [
               "${config.home.homeDirectory}/.tfenv/bin"
               "${config.home.homeDirectory}/.local/bin"
+              "${config.home.homeDirectory}/.local/scripts"
               "${config.home.homeDirectory}/.cargo/bin"
               "${config.home.homeDirectory}/go/bin"
               "${config.home.homeDirectory}/.spicetify"
@@ -167,16 +182,46 @@ in
           l = "eza -l";
           cat = "bat";
           less = "bat";
-          dc = "docker compose";
           sv = "source .venv/bin/activate";
           nr = "sudo nixos-rebuild --flake .#snow";
           cd = "z";
           tf = "terraform";
+          tg = "terragrunt";
           nd = "nix develop -c zsh";
           lg = "lazygit";
+
+          # Git 
+          ga = "git add";
+          gc = "git commit";
+          gcm = "git commit -m";
+          gs = "git status";
+          gd = "git diff";
+          gf = "git fetch";
+          gm = "git merge";
+          gr = "git rebase";
+          gp = "git push";
+          gu = "git unstage";
+          gco = "git checkout";
+          gb = "git branch";
+
+          # Docker
+          dstop = "docker ps --format '{{.Names}}' | fzf --multi | xargs -r docker stop";
+          dstopall = "docker stop $(docker ps -a -q)";
+          dexec = "docker exec -it $(docker ps --format '{{.Names}}' | fzf) bash";
+
+          # Docker Compose
+          dc = "docker compose";
           dcud = "docker compose up -d --build";
           dclf = "docker compose logs -f";
           dcl = "docker compose logs";
+
+          # AWS
+          awss = "export AWS_PROFILE=$(aws configure list-profiles | fzf)";
+          awsl = "aws sso login";
+
+          # LLM
+          llmc = "llm --system 'You are an assistant for an expert software engineer, answer concisely'";
+
         }
         // (
           if isLinux then
@@ -284,6 +329,8 @@ in
       enableZshIntegration = true;
     };
   };
+
+  home.file."./.local/scripts".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/scripts";
   xdg.configFile."nvim/init.lua".enable = false; # Disable default config
   home.file."./.config/nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-config/home-manager/configs/nvim";
