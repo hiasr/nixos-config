@@ -3,6 +3,15 @@ return {
     {
         'neovim/nvim-lspconfig',
     },
+    {
+        'rafikdraoui/jj-diffconflicts'
+    },
+    {
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
+        config = function() require("copilot").setup({ suggestion = { auto_trigger = true, keymap = {accept = "<Tab>"} } }) end,
+    },
     -- {
     --     "olimorris/codecompanion.nvim",
     --     dependencies = {
@@ -182,23 +191,37 @@ return {
                             }
                         }
                     }
-
                 end,
-                ["ruff"] = function ()
+                ["ruff"] = function()
                     require("lspconfig").ruff.setup({
                         init_options = {
                             settings = {
                                 -- Modification to any of these settings has no effect.
-                                enable = true,
-                                organizeImports       = true,
-                                fixAll                = true,
-                                lint = {
+                                enable          = true,
+                                organizeImports = true,
+                                fixAll          = true,
+                                lint            = {
                                     enable = true,
                                     run    = 'onType',
+                                },
                             },
                         },
+                        on_attach = function(client, bufnr)
+                            if client.supports_method("textDocument/formatting") then
+                                vim.api.nvim_clear_autocmds({ buffer = bufnr })
+                                vim.api.nvim_create_autocmd("BufWritePre", {
+                                    buffer = bufnr,
+                                    callback = function()
+                                        vim.lsp.buf.format({
+                                            async = false,
+                                            bufnr = bufnr
+                                        })
+                                    end,
+                                })
+                            end
+                        end,
                     }
-                });
+                    );
                 end,
                 ["lua_ls"] = function()
                     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
@@ -286,36 +309,36 @@ return {
         },
         keys = {
             {
-              "<leader>xx",
-              "<cmd>Trouble diagnostics toggle<cr>",
-              desc = "Diagnostics (Trouble)",
+                "<leader>xx",
+                "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Diagnostics (Trouble)",
             },
             {
-              "<leader>xX",
-              "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-              desc = "Buffer Diagnostics (Trouble)",
+                "<leader>xX",
+                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                desc = "Buffer Diagnostics (Trouble)",
             },
             {
-              "<leader>cs",
-              "<cmd>Trouble symbols toggle focus=false<cr>",
-              desc = "Symbols (Trouble)",
+                "<leader>cs",
+                "<cmd>Trouble symbols toggle focus=false<cr>",
+                desc = "Symbols (Trouble)",
             },
             {
-              "<leader>cl",
-              "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-              desc = "LSP Definitions / references / ... (Trouble)",
+                "<leader>cl",
+                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                desc = "LSP Definitions / references / ... (Trouble)",
             },
             {
-              "<leader>xL",
-              "<cmd>Trouble loclist toggle<cr>",
-              desc = "Location List (Trouble)",
+                "<leader>xL",
+                "<cmd>Trouble loclist toggle<cr>",
+                desc = "Location List (Trouble)",
             },
             {
-              "<leader>xQ",
-              "<cmd>Trouble qflist toggle<cr>",
-              desc = "Quickfix List (Trouble)",
+                "<leader>xQ",
+                "<cmd>Trouble qflist toggle<cr>",
+                desc = "Quickfix List (Trouble)",
             },
-          },
+        },
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -374,6 +397,15 @@ return {
         config = function() require("nvim-ts-autotag").setup() end
     },
     {
+        "nvim-pack/nvim-spectre",
+        config = function()
+            require("spectre").setup()
+        end,
+        keys = {
+            { "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", desc = "Toggle Spectre" },
+        },
+    },
+    {
         'echasnovski/mini.nvim',
         version = false,
         config = function()
@@ -382,7 +414,6 @@ return {
             require('mini.comment').setup();
             require('mini.pairs').setup();
             -- require('mini.diff').setup({source = require('mini.diff').gen_source.none(), options = {algorithm = 'patience'}});
-
         end
     },
 }

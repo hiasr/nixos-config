@@ -1,0 +1,33 @@
+#!/bin/bash
+
+assumerole() {
+    if [ -z "$1" ]; then
+        echo "Usage: assumerole <role-arn>"
+        return 1
+    fi
+
+    # Get current identity and extract session name
+    SESSION_NAME=$(basename "$(aws sts get-caller-identity --query Arn --output text)")
+
+    echo "Assuming role $1 as $SESSION_NAME"
+
+    # Assume the AWS role
+    OUT=$(aws sts assume-role --role-arn "$1" --role-session-name "$SESSION_NAME" --output json)
+
+    if [ $? -ne 0 ]; then
+        echo "Failed to assume role $1"
+        return 1
+    fi
+
+    # Export AWS credentials
+    export AWS_ACCESS_KEY_ID=$(echo "$OUT" | jq -r '.Credentials.AccessKeyId')
+    export AWS_SECRET_ACCESS_KEY=$(echo "$OUT" | jq -r '.Credentials.SecretAccessKey')
+    export AWS_SESSION_TOKEN=$(echo "$OUT" | jq -r '.Credentials.SessionToken')
+
+    echo "Assumed role $1"
+}
+
+# Call the function if script is run with an argument
+if [ "$#" -gt 0 ]; then
+    assumerole "$1"
+fi

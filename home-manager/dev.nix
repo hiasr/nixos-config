@@ -31,6 +31,8 @@ in
     pipx
     rustup
     pandoc
+    copier
+    ngrok
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
@@ -102,15 +104,19 @@ in
 
     jujutsu = {
       enable = true;
+      package = unstable.jujutsu;
       settings = {
         user = {
           name = "Ruben Hias";
-          email = "ruben.hias@gmail.com";
+          email = "ruben.hias@techwolf.ai";
+        };
+        git = {
+          subprocess = true;
         };
         ui = {
-          default-command = "log";
           paginate = "never";
-          diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
+          default-command = ["log" "--reversed"];
+          # diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
           merge-editor = "vimdiff";
         };
         "merge-tools.diffconflicts" = {
@@ -120,6 +126,17 @@ in
               "-c" "JJDiffConflicts!" "$output" "$base" "$left" "$right"
           ];
           merge-tool-edits-conflict-markers = true;
+        };
+        revset-aliases = {
+          "closest_bookmark(to)" = "heads(::to & bookmarks())";
+        };
+        aliases = {
+          tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
+          bm = ["bookmark"];
+          dm = ["describe" "-m"];
+          gf = ["git" "fetch"];
+          gp = ["git" "push"];
+          gpn = ["git" "push" "--allow-new" "-r" "@ | @-"];
         };
       };
     };
@@ -158,6 +175,15 @@ in
         chpwd_functions+=(zellij_tab_name_update)
         "
         ""
+        """
+        source <(COMPLETE=zsh jj)
+        """
+        """
+        if [[ -r \"$HOME/.secretprofile\" ]]; then
+          source \"$HOME/.secretprofile\"
+        fi
+        """
+
       ];
       envExtra = lib.concatStringsSep "\n" [
         (
@@ -199,6 +225,8 @@ in
           tg = "terragrunt";
           nd = "nix develop -c zsh";
           lg = "lazygit";
+          jt = "jiratrack";
+          cdf = "cd \"$(find . -maxdepth 1 -mindepth 1 -type d | sed 's|^\./||' | fzf)\"";
 
           # Git 
           ga = "git add";
