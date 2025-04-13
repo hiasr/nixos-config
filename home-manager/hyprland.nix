@@ -97,7 +97,7 @@
       bind =
         [
           ## Launch applications
-          "$mod, return, exec, alacritty"
+          "$mod, return, exec, ghostty"
           "$mod, F1, exec, hyprshot -m region --clipboard-only"
           "$mod, F2, exec, firefox"
 
