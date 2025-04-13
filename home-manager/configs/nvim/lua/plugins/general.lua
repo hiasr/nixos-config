@@ -1,13 +1,13 @@
 return {
     -- UI and UX
-    {
-        --     -- TODO: Change this back once Zellij PR merged
-        --     -- 'numToStr/Navigator.nvim',
-        'hiasr/Navigator.nvim',
-        config = function()
-            require('Navigator').setup()
-        end
-    },
+    -- {
+    --     --     -- TODO: Change this back once Zellij PR merged
+    --     --     -- 'numToStr/Navigator.nvim',
+    --     'hiasr/Navigator.nvim',
+    --     config = function()
+    --         require('Navigator').setup()
+    --     end
+    -- },
     {
         "folke/zen-mode.nvim",
     },
@@ -17,7 +17,7 @@ return {
             require("wrapping").setup()
         end
     },
-    -- { 'mrjones2014/smart-splits.nvim', lazy = false },
+    { 'mrjones2014/smart-splits.nvim', lazy = false },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
     {

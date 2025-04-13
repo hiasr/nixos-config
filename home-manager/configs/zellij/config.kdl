@@ -168,7 +168,6 @@ keybinds clear-defaults=true {
                 payload "right";
             };
         }
-        /*
         bind "Alt h" {
             MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
                 name "resize";
@@ -196,17 +195,13 @@ keybinds clear-defaults=true {
                 payload "right";
             };
         }
-        */
 
+        /*
         bind "Ctrl Shift h" { Resize "Left"; }
         bind "Ctrl Shift j" { Resize "Down"; }
         bind "Ctrl Shift k" { Resize "Up"; }
         bind "Ctrl Shift l" { Resize "Right"; }
-
-        bind "Alt h" { Resize "Left"; }
-        bind "Alt j" { Resize "Down"; }
-        bind "Alt k" { Resize "Up"; }
-        bind "Alt l" { Resize "Right"; }
+        */
 
         bind "Ctrl Enter" { WriteChars "\n"; }
 
