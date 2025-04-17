@@ -64,7 +64,7 @@
           };
           modules = [
             ./home-manager/home.nix
-            inputs.catppuccin.homeManagerModules.catppuccin
+            inputs.catppuccin.homeModules.catppuccin
           ];
         };
         "linux" = home-manager.lib.homeManagerConfiguration {
@@ -76,7 +76,7 @@
           modules = [
             ./home-manager/home.nix
             ./home-manager/linux.nix
-            inputs.catppuccin.homeManagerModules.catppuccin
+            inputs.catppuccin.homeModules.catppuccin
           ];
         };
       };

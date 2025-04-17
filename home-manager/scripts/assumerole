@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]; then
+echo "Usage: assumerole <role-arn>"
+return 1
+fi
+
+ROLE_ARN="$1"
+# Derive session name from current caller identity's ARN basename
+SESSION_NAME=$(basename "$(aws sts get-caller-identity --query Arn --output text)")
+
+echo "Assuming role ${ROLE_ARN} as ${SESSION_NAME}"
+
+# Call assume-role and capture the JSON output
+CREDENTIALS_JSON=$(aws sts assume-role \
+--role-arn "${ROLE_ARN}" \
+--role-session-name "${SESSION_NAME}") || {
+  echo "Failed to assume role ${ROLE_ARN}" >&2
+  return 1
+}
+
+# Parse and export credentials
+export AWS_ACCESS_KEY_ID=$(echo "${CREDENTIALS_JSON}" | jq -r '.Credentials.AccessKeyId')
+export AWS_SECRET_ACCESS_KEY=$(echo "${CREDENTIALS_JSON}" | jq -r '.Credentials.SecretAccessKey')
+export AWS_SESSION_TOKEN=$(echo "${CREDENTIALS_JSON}" | jq -r '.Credentials.SessionToken')
+
+echo "Assumed role ${ROLE_ARN}"
+

@@ -36,7 +36,6 @@ in
     kanshi
     clang
     llvm
-    nodejs
     unzip
     obsidian
     vlc

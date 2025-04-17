@@ -11,13 +11,14 @@ return {
     {
         "folke/zen-mode.nvim",
     },
-    {
-        "andrewferrier/wrapping.nvim",
-        config = function()
-            require("wrapping").setup()
-        end
-    },
     { 'mrjones2014/smart-splits.nvim', lazy = false },
+    -- {
+    --     "andrewferrier/wrapping.nvim",
+    --     config = function()
+    --         require("wrapping").setup()
+    --     end
+    -- },
+    -- { 'mrjones2014/smart-splits.nvim', lazy = false },
     -- Color Schemes
     { "catppuccin/nvim", as = "catppuccin" }, -- Theme
     {
@@ -62,16 +63,16 @@ return {
     {
         "epwalsh/obsidian.nvim",
         version = "*", -- use latest release instead of latest commit
-        lazy = true,
-        -- ft = "markdown",
-        -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
-        event = {
-            -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-            -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-            -- refer to `:h file-pattern` for more examples
-            "BufReadPre " .. vim.fn.expand "~" .. "/obsidian/*.md",
-            "BufReadPre " .. vim.fn.expand "~" .. "/Obsidian/*.md",
-        },
+        -- lazy = true,
+        -- -- ft = "markdown",
+        -- -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+        -- event = {
+        --     -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+        --     -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+        --     -- refer to `:h file-pattern` for more examples
+        --     "BufReadPre " .. vim.fn.expand "~" .. "/obsidian/*.md",
+        --     "BufReadPre " .. vim.fn.expand "~" .. "/Obsidian/*.md",
+        -- },
         dependencies = {
             -- Required.
             "nvim-lua/plenary.nvim",
@@ -97,7 +98,48 @@ return {
                 bullets = { char = "-", hl_group = "ObsidianBullet" },
             }
         },
+        keys = {
+            { "<leader>Ot", "<cmd>ObsidianToday<cr>",       desc = "Open daily note" },
+            { "<leader>Of", "<cmd>ObsidianQuickSwitch<cr>", desc = "Find note in vault" },
+            { "<leader>Os", "<cmd>ObsidianSearch<cr>",      desc = "Find note in vault" }
+
+        }
     },
+    -- {
+    --     "gaoDean/autolist.nvim",
+    --     ft = {
+    --         "markdown",
+    --         "text",
+    --         "tex",
+    --         "plaintex",
+    --         "norg",
+    --     },
+    --     config = function()
+    --         require("autolist").setup()
+    --         vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>")
+    --         vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>")
+    --         -- vim.keymap.set("i", "<c-t>", "<c-t><cmd>AutolistRecalculate<cr>") -- an example of using <c-t> to indent
+    --         vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")
+    --         vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>")
+    --         vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr>")
+    --         vim.keymap.set("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>")
+    --         vim.keymap.set("n", "<C-r>", "<cmd>AutolistRecalculate<cr>")
+    --
+    --         -- cycle list types with dot-repeat
+    --         vim.keymap.set("n", "<leader>cn", require("autolist").cycle_next_dr, { expr = true })
+    --         vim.keymap.set("n", "<leader>cp", require("autolist").cycle_prev_dr, { expr = true })
+    --
+    --         -- if you don't want dot-repeat
+    --         -- vim.keymap.set("n", "<leader>cn", "<cmd>AutolistCycleNext<cr>")
+    --         -- vim.keymap.set("n", "<leader>cp", "<cmd>AutolistCycleNext<cr>")
+    --
+    --         -- functions to recalculate list on edit
+    --         vim.keymap.set("n", ">>", ">><cmd>AutolistRecalculate<cr>")
+    --         vim.keymap.set("n", "<<", "<<<cmd>AutolistRecalculate<cr>")
+    --         vim.keymap.set("n", "dd", "dd<cmd>AutolistRecalculate<cr>")
+    --         vim.keymap.set("v", "d", "d<cmd>AutolistRecalculate<cr>")
+    --     end
+    -- },
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },

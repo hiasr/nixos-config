@@ -31,6 +31,11 @@ in
     pipx
     rustup
     pandoc
+    unstable.copier
+    ngrok
+    flameshot
+    delta
+    toml-cli
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
@@ -102,16 +107,24 @@ in
 
     jujutsu = {
       enable = true;
+      package = unstable.jujutsu;
       settings = {
         user = {
           name = "Ruben Hias";
-          email = "ruben.hias@gmail.com";
+          email = "ruben.hias@techwolf.ai";
+        };
+        git = {
+          subprocess = true;
         };
         ui = {
-          default-command = "log";
-          paginate = "never";
-          diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
-          merge-editor = "vimdiff";
+          # paginate = "never";
+          #default-command = ["log" "--reversed"];
+          # diff-editor = ["nvim" "-c" "DiffEditor $left $right $output"];
+          # merge-editor = "vimdiff";
+          default-command = "l";
+          pager = "delta";
+          diff.format = "git";
+
         };
         "merge-tools.diffconflicts" = {
           program = "nvim";
@@ -120,6 +133,20 @@ in
               "-c" "JJDiffConflicts!" "$output" "$base" "$left" "$right"
           ];
           merge-tool-edits-conflict-markers = true;
+        };
+        revset-aliases = {
+          "closest_bookmark(to)" = "heads(::to & bookmarks())";
+        };
+        aliases = {
+          tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
+          bm = ["bookmark"];
+          dm = ["describe" "-m"];
+          gf = ["git" "fetch"];
+          gp = ["git" "push"];
+          gpn = ["git" "push" "--allow-new" "-r" "@ | @-"];
+          nt = ["new" "trunk()"];
+          rebase-all = ["rebase" "-s" "all:roots(trunk()..mutable())" "-d" "trunk()"];
+          l = ["log" "-r" "ancestors(reachable(@, mutable()), 2)"];
         };
       };
     };
@@ -158,6 +185,15 @@ in
         chpwd_functions+=(zellij_tab_name_update)
         "
         ""
+        """
+        source <(COMPLETE=zsh jj)
+        """
+        """
+        if [[ -r \"$HOME/.secretprofile\" ]]; then
+          source \"$HOME/.secretprofile\"
+        fi
+        """
+
       ];
       envExtra = lib.concatStringsSep "\n" [
         (
@@ -199,6 +235,8 @@ in
           tg = "terragrunt";
           nd = "nix develop -c zsh";
           lg = "lazygit";
+          jt = "jiratrack";
+          cdf = "cd \"$(find . -maxdepth 1 -mindepth 1 -type d | sed 's|^\./||' | fzf)\"";
 
           # Git 
           ga = "git add";
@@ -226,7 +264,7 @@ in
           dcl = "docker compose logs";
 
           # AWS
-          awss = "export AWS_PROFILE=$(aws configure list-profiles | fzf)";
+          awss = "export AWS_PROFILE=$(grep -Eo '\\[profile[^]]*\\]' ~/.aws/config | sed 's/^\\[profile \\(.*\\)\\]$/\\1/' | fzf)";
           awsl = "aws sso login";
 
           # LLM
@@ -261,7 +299,7 @@ in
       enableZshIntegration = true;
       settings = {
         manager = {
-          sort_by = "modified";
+          sort_by = "mtime";
           sort_reverse = true;
         };
       };
@@ -321,7 +359,6 @@ in
 
     neovim = {
       enable = true;
-      package = unstable.neovim-unwrapped;
       defaultEditor = true;
       vimAlias = true;
     };

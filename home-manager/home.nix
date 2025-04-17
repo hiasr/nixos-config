@@ -48,8 +48,8 @@ in
 
   home.packages = with pkgs; [
     nerdfonts
-    iosevka
     todoist
+    ente-cli
   ];
 
   services.syncthing.enable = true;
