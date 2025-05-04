@@ -36,6 +36,8 @@ in
     flameshot
     delta
     toml-cli
+    tailscale
+    cloudflared
   ];
   xdg.configFile."ghostty".source = ./configs/ghostty;
 
@@ -110,8 +112,8 @@ in
       package = unstable.jujutsu;
       settings = {
         user = {
-          name = "Ruben Hias";
-          email = "ruben.hias@techwolf.ai";
+          name = "hiasr";
+          email = "ruben.hias@gmail.com";
         };
         git = {
           subprocess = true;
@@ -123,7 +125,7 @@ in
           # merge-editor = "vimdiff";
           default-command = "l";
           pager = "delta";
-          diff.format = "git";
+          diff-formatter = ":git";
 
         };
         "merge-tools.diffconflicts" = {
@@ -161,7 +163,7 @@ in
       dotDir = ".config/zsh";
       autosuggestion.enable = true;
       autocd = true;
-      initExtra = lib.concatStringsSep "\n" [
+      initContent = lib.concatStringsSep "\n" [
         ""
         "if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
           . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'

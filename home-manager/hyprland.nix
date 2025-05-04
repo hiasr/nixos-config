@@ -12,7 +12,7 @@
       monitor = [
         "eDP-1,1920x1080,0x0,1"
         "DP-1,3840x2160,1920x0,1.25"
-        "HDMI-A-2,3840x2160,0x0,1.25"
+        "HDMI-A-2, 3840x2160@60, 0x0, 1.2"
         ",preferred,auto,1"
       ];
 
@@ -48,6 +48,10 @@
       misc = {
         disable_splash_rendering = true;
         disable_hyprland_logo = true;
+      };
+      
+      debug = {
+        disable_scale_checks = true;
       };
 
       animations = {

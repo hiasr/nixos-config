@@ -20,7 +20,7 @@
   home.packages = with pkgs; [
     wl-clipboard
     networkmanagerapplet
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     gnome-icon-theme
   ];
 

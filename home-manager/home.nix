@@ -47,9 +47,10 @@ in
   };
 
   home.packages = with pkgs; [
-    nerdfonts
     todoist
     ente-cli
+    nerd-fonts.iosevka
+    nerd-fonts.fantasque-sans-mono
   ];
 
   services.syncthing.enable = true;

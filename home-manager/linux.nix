@@ -29,7 +29,6 @@ in
     beeper
     spotify
     google-chrome
-    albert
     discord
     udiskie
     bitwarden-cli
@@ -42,6 +41,9 @@ in
     stremio
     pavucontrol
     unstable.ghostty
+    uv
+    nodejs
+    unstable.claude-code
 
     # coding
     (python3.withPackages (ppkgs: [
@@ -61,7 +63,7 @@ in
   gtk = {
     enable = true;
     iconTheme = {
-      package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
     };
   };

@@ -160,84 +160,73 @@ return {
                     "ruff"
                 }
             }
-            require("mason-lspconfig").setup_handlers {
-                function(server_name)
-                    if server_name == "jdtls" then
-                        return
-                    end
-                    if server_name == "rust_analyzer" then
-                        return
-                    end
-                    if server_name == "basedpyright" then
-                        return
-                    end
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-                        .make_client_capabilities())
-                    require("lspconfig")[server_name].setup { capabilities = capabilities }
+            local lspconfig = require("lspconfig")
+            local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+            lspconfig.basedpyright.setup({
+                capabilities = capabilities,
+                root_dir = function()
+                    return vim.fn.getcwd()
                 end,
-                ["basedpyright"] = function()
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-                        .make_client_capabilities())
-                    require("lspconfig")["basedpyright"].setup {
-                        capabilities = capabilities,
-                        root_dir = function()
-                            return vim.fn.getcwd()
-                        end,
-                        settings = {
-                            basedpyright = {
-                                analysis = {
-                                    typeCheckingMode = "standard",
-                                }
-                            }
-                        }
-                    }
-                end,
-                ["ruff"] = function()
-                    require("lspconfig").ruff.setup({
-                        init_options = {
-                            settings = {
-                                -- Modification to any of these settings has no effect.
-                                enable          = true,
-                                organizeImports = true,
-                                fixAll          = true,
-                                lint            = {
-                                    enable = true,
-                                    run    = 'onType',
-                                },
-                            },
-                        },
-                        on_attach = function(client, bufnr)
-                            if client.supports_method("textDocument/formatting") then
-                                vim.api.nvim_clear_autocmds({ buffer = bufnr })
-                                vim.api.nvim_create_autocmd("BufWritePre", {
-                                    buffer = bufnr,
-                                    callback = function()
-                                        vim.lsp.buf.format({
-                                            async = false,
-                                            bufnr = bufnr
-                                        })
-                                    end,
+                on_attach = function(client, bufnr)
+                    if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_clear_autocmds({ buffer = bufnr })
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            buffer = bufnr,
+                            callback = function()
+                                vim.lsp.buf.format({
+                                    async = false,
+                                    bufnr = bufnr
                                 })
-                            end
-                        end,
-                    }
-                    );
+                            end,
+                        })
+                    end
                 end,
-                ["lua_ls"] = function()
-                    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol
-                        .make_client_capabilities())
-                    require("lspconfig").lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { 'vim' },
-                                }
-                            }
-                        }
-                    }
+            })
+            lspconfig.ruff.setup({
+                init_options = {
+                    settings = {
+                        -- Modification to any of these settings has no effect.
+                        enable          = true,
+                        organizeImports = true,
+                        fixAll          = true,
+                        lint            = {
+                            enable = true,
+                            run    = 'onType',
+                        },
+                    },
+                },
+                on_attach = function(client, bufnr)
+                    if client.supports_method("textDocument/formatting") then
+                        vim.api.nvim_clear_autocmds({ buffer = bufnr })
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            buffer = bufnr,
+                            callback = function()
+                                vim.lsp.buf.format({
+                                    async = false,
+                                    bufnr = bufnr
+                                })
+                            end,
+                        })
+                    end
                 end,
-            }
+            })
+            lspconfig.lua_ls.setup({
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { 'vim' },
+                        },
+                        workspace = {
+                            checkThirdParty = false,
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    }
+                }
+            })
         end
     },
     {
